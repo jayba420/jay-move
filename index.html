@@ -1396,6 +1396,10 @@ window.addEventListener('error', (event) => {
   }
 }, true);
 
+window.gm_authFailure = function gm_authFailure() {
+  renderMapError('Google Maps auth failed. Enable billing and confirm key restrictions include this site and both Maps JavaScript API + Directions API.');
+};
+
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&callback=initRouteMap"></script>
 </body>
