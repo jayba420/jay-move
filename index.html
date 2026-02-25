@@ -4,3 +4,1290 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jay's Move to Arizona — March 2025</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sand: #F5ECD7;
+      --rust: #C8502A;
+      --burnt: #8B3A1A;
+      --sky: #5B8FA8;
+      --sage: #7A9E7E;
+      --night: #1A1614;
+      --warm-gray: #2E2825;
+      --mid-gray: #6B5E56;
+      --light-tan: #EAD9C0;
+      --white: #FDFAF5;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--night);
+      color: var(--sand);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 4rem 3rem 5rem;
+      position: relative;
+      overflow: hidden;
+      background: var(--night);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 60% 70%, rgba(200, 80, 42, 0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 20% 40%, rgba(91, 143, 168, 0.12) 0%, transparent 60%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cdefs%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      z-index: 0;
+    }
+
+    /* Desert horizon illustration */
+    .hero-horizon {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 45%;
+      z-index: 0;
+    }
+
+    /* Saguaro silhouettes */
+    .saguaro {
+      position: absolute;
+      bottom: 0;
+      fill: #110E0C;
+    }
+
+    .hero-eyebrow {
+      position: relative;
+      z-index: 1;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.2s;
+    }
+
+    .hero-title {
+      position: relative;
+      z-index: 1;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 14vw, 13rem);
+      line-height: 0.88;
+      color: var(--sand);
+      letter-spacing: 0.01em;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.4s;
+    }
+
+    .hero-title span {
+      color: var(--rust);
+      display: block;
+    }
+
+    .hero-subtitle {
+      position: relative;
+      z-index: 1;
+      margin-top: 2rem;
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--mid-gray);
+      max-width: 480px;
+      line-height: 1.6;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.6s;
+    }
+
+    .hero-meta {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.8s;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .hero-meta-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid-gray);
+    }
+
+    .hero-meta-value {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      color: var(--sand);
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      right: 3rem;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--mid-gray);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards 1.5s;
+    }
+
+    .scroll-hint::after {
+      content: '';
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--mid-gray), transparent);
+      animation: scrollLine 2s ease infinite 2s;
+    }
+
+    @keyframes scrollLine {
+      0% { transform: scaleY(0); transform-origin: top; opacity: 1; }
+      50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+      51% { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
+      100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+    }
+
+    /* ─── PROGRESS BAR ─── */
+    .progress-section {
+      background: var(--warm-gray);
+      padding: 4rem 3rem;
+      position: relative;
+    }
+
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 2rem;
+    }
+
+    .progress-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .progress-milestone {
+      background: var(--warm-gray);
+      padding: 1.75rem 1.5rem;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-milestone:hover { background: rgba(255,255,255,0.04); }
+
+    .progress-milestone.done::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--sage);
+    }
+
+    .progress-milestone.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--rust);
+    }
+
+    .milestone-date {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mid-gray);
+      margin-bottom: 0.4rem;
+    }
+
+    .milestone-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.05rem;
+      color: var(--sand);
+      line-height: 1.3;
+    }
+
+    .milestone-badge {
+      margin-top: 0.75rem;
+      display: inline-block;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border-radius: 2px;
+    }
+
+    .badge-done { background: rgba(122, 158, 126, 0.2); color: var(--sage); }
+    .badge-active { background: rgba(200, 80, 42, 0.2); color: var(--rust); }
+    .badge-upcoming { background: rgba(107, 94, 86, 0.2); color: var(--mid-gray); }
+
+    /* ─── ROUTE SECTION ─── */
+    .route-section {
+      padding: 6rem 3rem;
+      background: var(--night);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      line-height: 1;
+      color: var(--sand);
+    }
+
+    .section-title em {
+      color: var(--rust);
+      font-style: normal;
+    }
+
+    .section-note {
+      font-size: 0.8rem;
+      color: var(--mid-gray);
+      text-align: right;
+      max-width: 200px;
+      line-height: 1.5;
+    }
+
+    .route-legs {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .route-leg {
+      display: grid;
+      grid-template-columns: 80px 1fr 1fr 1fr;
+      gap: 0;
+      background: var(--night);
+      transition: background 0.2s ease;
+      cursor: pointer;
+    }
+
+    .route-leg:hover { background: rgba(255,255,255,0.03); }
+    .route-leg.expanded { background: var(--warm-gray); }
+
+    .route-leg-day {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 1rem;
+      background: rgba(255,255,255,0.03);
+      border-right: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .day-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      color: var(--rust);
+      line-height: 1;
+    }
+
+    .day-word {
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid-gray);
+    }
+
+    .route-leg-main {
+      padding: 2rem;
+      border-right: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .leg-date {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mid-gray);
+      margin-bottom: 0.5rem;
+    }
+
+    .leg-route {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      color: var(--sand);
+      line-height: 1.3;
+    }
+
+    .leg-route span {
+      color: var(--rust);
+    }
+
+    .route-leg-stats {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.75rem;
+      border-right: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+    }
+
+    .stat-value {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      color: var(--sand);
+    }
+
+    .stat-unit {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid-gray);
+    }
+
+    .route-leg-hotel {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hotel-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid-gray);
+      margin-bottom: 0.4rem;
+    }
+
+    .hotel-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--sand);
+      line-height: 1.4;
+    }
+
+    .hotel-stars {
+      margin-top: 0.35rem;
+      color: var(--rust);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+    }
+
+    .leg-details {
+      display: none;
+      grid-column: 1 / -1;
+      padding: 0 2rem 2rem 2rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .route-leg.expanded .leg-details { display: block; }
+
+    .leg-details-inner {
+      padding-top: 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .leg-detail-block h4 {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 0.75rem;
+    }
+
+    .leg-detail-block p {
+      font-size: 0.875rem;
+      color: var(--mid-gray);
+      line-height: 1.7;
+    }
+
+    .leg-detail-block a {
+      color: var(--sky);
+      text-decoration: none;
+    }
+
+    .leg-detail-block a:hover { text-decoration: underline; }
+
+    /* ─── MAP SECTION ─── */
+    .map-section {
+      background: var(--warm-gray);
+      padding: 5rem 3rem;
+    }
+
+    .map-container {
+      width: 100%;
+      height: 500px;
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+      margin-top: 2.5rem;
+      background: #111;
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* ─── TIMELINE SECTION ─── */
+    .timeline-section {
+      padding: 6rem 3rem;
+      background: var(--night);
+    }
+
+    .timeline-grid {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 0;
+      position: relative;
+    }
+
+    .timeline-grid::before {
+      content: '';
+      position: absolute;
+      left: 199px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .timeline-week {
+      display: contents;
+    }
+
+    .timeline-date-col {
+      padding: 2.5rem 2.5rem 2.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .timeline-date-week {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 0.35rem;
+    }
+
+    .timeline-date-range {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1rem;
+      color: var(--mid-gray);
+    }
+
+    .timeline-tasks-col {
+      padding: 2.5rem 0 2.5rem 2.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .timeline-phase {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      color: var(--sand);
+      margin-bottom: 1rem;
+    }
+
+    .timeline-tasks {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .timeline-tasks li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.875rem;
+      color: var(--mid-gray);
+      line-height: 1.6;
+      cursor: pointer;
+      transition: color 0.15s ease;
+    }
+
+    .timeline-tasks li:hover { color: var(--sand); }
+
+    .task-check {
+      width: 16px;
+      height: 16px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 2px;
+      flex-shrink: 0;
+      margin-top: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .task-check.checked {
+      background: var(--sage);
+      border-color: var(--sage);
+    }
+
+    .task-check.checked::after {
+      content: '✓';
+      font-size: 0.6rem;
+      color: var(--night);
+      font-weight: 600;
+    }
+
+    /* ─── TRAILER SECTION ─── */
+    .logistics-section {
+      background: var(--warm-gray);
+      padding: 5rem 3rem;
+    }
+
+    .logistics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
+      margin-top: 3rem;
+    }
+
+    .logistics-card {
+      background: var(--warm-gray);
+      padding: 2.5rem;
+    }
+
+    .logistics-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .logistics-card h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      color: var(--sand);
+      margin-bottom: 0.75rem;
+    }
+
+    .logistics-card p {
+      font-size: 0.875rem;
+      color: var(--mid-gray);
+      line-height: 1.7;
+    }
+
+    .logistics-card strong {
+      color: var(--sand);
+      font-weight: 500;
+    }
+
+    .logistics-card a {
+      color: var(--sky);
+      text-decoration: none;
+      font-size: 0.875rem;
+    }
+
+    .logistics-card a:hover { text-decoration: underline; }
+
+    /* ─── PLAN B SECTION ─── */
+    .planb-section {
+      padding: 5rem 3rem;
+      background: var(--night);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .planb-banner {
+      background: rgba(200, 80, 42, 0.08);
+      border: 1px solid rgba(200, 80, 42, 0.25);
+      border-radius: 4px;
+      padding: 2.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .planb-eyebrow {
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 1rem;
+    }
+
+    .planb-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem;
+      color: var(--sand);
+      margin-bottom: 1rem;
+    }
+
+    .planb-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5rem;
+      font-size: 0.875rem;
+    }
+
+    .planb-table th {
+      text-align: left;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mid-gray);
+      padding: 0 0 0.75rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .planb-table td {
+      padding: 0.85rem 0;
+      color: var(--mid-gray);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .planb-table td:first-child {
+      color: var(--sand);
+      font-family: 'DM Serif Display', serif;
+      font-size: 0.95rem;
+      padding-right: 2rem;
+    }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      padding: 3rem;
+      background: #0E0B09;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-brand {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      color: var(--mid-gray);
+      letter-spacing: 0.05em;
+    }
+
+    .footer-note {
+      font-size: 0.75rem;
+      color: rgba(107,94,86,0.5);
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .hero { padding: 3rem 1.5rem 4rem; }
+      .progress-section, .route-section, .timeline-section,
+      .logistics-section, .planb-section { padding: 3rem 1.5rem; }
+      .map-section { padding: 3rem 1.5rem; }
+
+      .route-leg {
+        grid-template-columns: 60px 1fr;
+      }
+
+      .route-leg-stats,
+      .route-leg-hotel {
+        display: none;
+      }
+
+      .timeline-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline-grid::before { display: none; }
+
+      .timeline-date-col {
+        padding: 1.5rem 0 0.5rem;
+        border-bottom: none;
+      }
+
+      .timeline-tasks-col {
+        padding: 0.5rem 0 2rem;
+      }
+
+      .footer {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+
+      .leg-details-inner {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <!-- SVG Saguaro desert silhouette -->
+  <svg class="hero-horizon" viewBox="0 0 1440 400" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+    <!-- Mountains -->
+    <path d="M0 300 L120 180 L200 240 L320 120 L440 200 L560 160 L680 220 L760 140 L880 200 L1000 100 L1120 180 L1240 130 L1360 160 L1440 140 L1440 400 L0 400Z" fill="#0D0A08" opacity="0.9"/>
+    <path d="M0 340 L80 280 L160 310 L280 250 L400 290 L520 260 L640 290 L720 270 L840 295 L960 255 L1080 280 L1200 260 L1320 275 L1440 265 L1440 400 L0 400Z" fill="#0E0B09" opacity="0.95"/>
+
+    <!-- Saguaro 1 -->
+    <g transform="translate(200, 200)">
+      <rect x="-6" y="-120" width="12" height="120" fill="#0A0706"/>
+      <rect x="-4" y="-80" width="30" height="8" fill="#0A0706"/>
+      <rect x="22" y="-110" width="8" height="40" fill="#0A0706"/>
+      <rect x="-30" y="-95" width="8" height="30" fill="#0A0706"/>
+      <rect x="-34" y="-110" width="8" height="40" fill="#0A0706"/>
+    </g>
+
+    <!-- Saguaro 2 -->
+    <g transform="translate(560, 220)">
+      <rect x="-5" y="-90" width="10" height="90" fill="#0A0706"/>
+      <rect x="-4" y="-60" width="22" height="6" fill="#0A0706"/>
+      <rect x="14" y="-80" width="6" height="30" fill="#0A0706"/>
+      <rect x="-22" y="-72" width="6" height="22" fill="#0A0706"/>
+    </g>
+
+    <!-- Saguaro 3 big -->
+    <g transform="translate(1000, 185)">
+      <rect x="-8" y="-150" width="16" height="150" fill="#0A0706"/>
+      <rect x="-6" y="-100" width="38" height="10" fill="#0A0706"/>
+      <rect x="28" y="-135" width="10" height="50" fill="#0A0706"/>
+      <rect x="-38" y="-118" width="10" height="36" fill="#0A0706"/>
+      <rect x="-44" y="-135" width="10" height="50" fill="#0A0706"/>
+    </g>
+
+    <!-- Saguaro 4 -->
+    <g transform="translate(1280, 200)">
+      <rect x="-5" y="-100" width="10" height="100" fill="#0A0706"/>
+      <rect x="-4" y="-68" width="26" height="7" fill="#0A0706"/>
+      <rect x="18" y="-90" width="7" height="34" fill="#0A0706"/>
+    </g>
+
+    <!-- Ground -->
+    <rect x="0" y="340" width="1440" height="60" fill="#0A0706"/>
+  </svg>
+
+  <div class="hero-eyebrow">Manchester, NH → Tempe, AZ</div>
+
+  <h1 class="hero-title">
+    Moving
+    <span>West</span>
+  </h1>
+
+  <p class="hero-subtitle">
+    Jay Kolbenson's move from New Hampshire to Arizona.
+    2,280 miles. 5 days. One Jeep, one trailer, and a new chapter.
+  </p>
+
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Departure</span>
+      <span class="hero-meta-value">March 21, 2025</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Arrival</span>
+      <span class="hero-meta-value">March 25, 2025</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Total Miles</span>
+      <span class="hero-meta-value">~2,280</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Driving Days</span>
+      <span class="hero-meta-value">5</span>
+    </div>
+  </div>
+
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+<!-- ─── MILESTONES ─── -->
+<section class="progress-section">
+  <p class="section-label">Key Milestones</p>
+  <div class="progress-grid" id="milestoneGrid">
+    <!-- Filled by JS -->
+  </div>
+</section>
+
+<!-- ─── ROUTE ─── -->
+<section class="route-section">
+  <div class="section-header reveal">
+    <h2 class="section-title">The<br/><em>Route</em></h2>
+    <p class="section-note">Click any day to expand route details and hotel info</p>
+  </div>
+
+  <div class="route-legs" id="routeLegs">
+    <!-- Filled by JS -->
+  </div>
+</section>
+
+<!-- ─── MAP ─── -->
+<section class="map-section">
+  <p class="section-label">Route Map</p>
+  <h2 class="section-title reveal">Mason → <em>Tempe</em></h2>
+  <div class="map-container reveal">
+    <iframe
+      src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&origin=Mason,NH&destination=Tempe,AZ&waypoints=Pittsburgh,PA|Louisville,KY|Memphis,TN|Amarillo,TX&mode=driving"
+      allowfullscreen
+      loading="lazy"
+      title="Move route from Mason NH to Tempe AZ">
+    </iframe>
+  </div>
+  <p style="font-size:0.75rem; color: var(--mid-gray); margin-top: 1rem;">
+    Route: I-93 S → I-90 W → I-84 W → I-81 S → I-76 W → I-79 S → I-64 W → I-65 S → I-40 W → I-25 S → I-10 W → AZ-202 E
+  </p>
+</section>
+
+<!-- ─── TIMELINE ─── -->
+<section class="timeline-section">
+  <div class="section-header reveal">
+    <h2 class="section-title">Pre-Move<br/><em>Timeline</em></h2>
+  </div>
+  <div class="timeline-grid" id="timelineGrid">
+    <!-- Filled by JS -->
+  </div>
+</section>
+
+<!-- ─── LOGISTICS ─── -->
+<section class="logistics-section">
+  <p class="section-label">Logistics</p>
+  <h2 class="section-title reveal">The Details</h2>
+  <div class="logistics-grid" id="logisticsGrid">
+    <!-- Filled by JS -->
+  </div>
+</section>
+
+<!-- ─── PLAN B ─── -->
+<section class="planb-section">
+  <p class="section-label">Alternative Plan</p>
+  <h2 class="section-title reveal">Plan B:<br/><em>April 3rd</em></h2>
+  <div class="planb-banner reveal">
+    <p class="planb-eyebrow">Later Move-In Option</p>
+    <p class="planb-title">Depart March 29 — Arrive April 3</p>
+    <p style="font-size:0.875rem; color: var(--mid-gray); line-height:1.7;">
+      This option gives you an extra 8 days of breathing room before departure — more time to pack, sell furniture, say proper goodbyes, and arrive refreshed rather than rushed. Same route, same hotels, same 5 driving days. Your April 1 move-in becomes an April 3 arrival with a buffer day built in.
+    </p>
+    <table class="planb-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Leg</th>
+          <th>Overnight</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Sat, Mar 29</td><td>Mason, NH → Pittsburgh, PA</td><td>Courtyard Pittsburgh Downtown</td></tr>
+        <tr><td>Sun, Mar 30</td><td>Pittsburgh, PA → Louisville, KY</td><td>Louisville Marriott Downtown</td></tr>
+        <tr><td>Mon, Mar 31</td><td>Louisville, KY → Memphis, TN</td><td>Courtyard Memphis Downtown</td></tr>
+        <tr><td>Tue, Apr 1</td><td>Memphis, TN → Amarillo, TX</td><td>SpringHill Suites Amarillo</td></tr>
+        <tr><td>Wed, Apr 2</td><td>Amarillo, TX → Tempe, AZ</td><td><strong style="color:var(--sage)">Your New Apartment</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer class="footer">
+  <div class="footer-brand">Mason → Tempe 2025</div>
+  <p class="footer-note">Built for Jay Kolbenson · Shared move plan</p>
+</footer>
+
+<script>
+// ─── DATA ───
+const milestones = [
+  { date: 'Feb 22-25', title: 'Apartment Hunting', status: 'done' },
+  { date: 'Feb 24', title: 'Book Hotels & Trailer', status: 'active' },
+  { date: 'Mar 3', title: 'Begin Packing', status: 'upcoming' },
+  { date: 'Mar 10', title: 'Mid-Pack Push', status: 'upcoming' },
+  { date: 'Mar 14', title: 'Purge Day', status: 'upcoming' },
+  { date: 'Mar 17', title: 'Final Week Prep', status: 'upcoming' },
+  { date: 'Mar 20', title: 'Pick Up Trailer', status: 'upcoming' },
+  { date: 'Mar 21', title: 'Departure Day!', status: 'upcoming' },
+  { date: 'Mar 25', title: 'Arrive in Tempe', status: 'upcoming' },
+];
+
+const legs = [
+  {
+    day: 1,
+    date: 'Friday, March 21',
+    from: 'Mason, NH',
+    to: 'Pittsburgh, PA',
+    miles: '~570',
+    hours: '~8.5',
+    depart: '7:00 AM',
+    hotel: 'Courtyard by Marriott Pittsburgh Downtown',
+    hotelRating: '4.4 ★',
+    hotelPhone: '(412) 434-5551',
+    hotelAddr: '945 Penn Ave, Pittsburgh, PA 15222',
+    hotelUrl: 'https://www.marriott.com/en-us/hotels/pitcy-courtyard-pittsburgh-downtown/overview/',
+    highway: 'I-93 S → I-90 W (Mass Pike) → I-84 W → I-81 S → I-76 W (PA Turnpike)',
+    tip: 'Your longest day alongside Day 4. Set your alarm for 6:00 AM. Refuel in Binghamton, NY around the halfway point. Call ahead to confirm they can accommodate trailer parking.',
+  },
+  {
+    day: 2,
+    date: 'Saturday, March 22',
+    from: 'Pittsburgh, PA',
+    to: 'Louisville, KY',
+    miles: '~390',
+    hours: '~6',
+    depart: '8:00 AM',
+    hotel: 'Louisville Marriott Downtown',
+    hotelRating: '4.4 ★',
+    hotelPhone: '(502) 627-5045',
+    hotelAddr: '280 W Jefferson St, Louisville, KY 40202',
+    hotelUrl: 'https://www.marriott.com/en-us/hotels/sdflm-louisville-marriott-downtown/overview/',
+    highway: 'I-79 S → I-68 W → I-79 S → I-64 W',
+    tip: 'Your easiest day mileage-wise. Arrive early afternoon. The Louisville Marriott is the standout hotel of the trip — legendary bourbon bar and elite lounge. Walk the Ohio River waterfront.',
+  },
+  {
+    day: 3,
+    date: 'Sunday, March 23',
+    from: 'Louisville, KY',
+    to: 'Memphis, TN',
+    miles: '~390',
+    hours: '~6',
+    depart: '8:00 AM',
+    hotel: 'Courtyard by Marriott Memphis Downtown',
+    hotelRating: '4.2 ★',
+    hotelPhone: '(901) 522-2200',
+    hotelAddr: '75 Jefferson Ave, Memphis, TN 38103',
+    hotelUrl: 'https://www.marriott.com/en-us/hotels/memcd-courtyard-memphis-downtown/overview/',
+    highway: 'I-65 S → I-40 W',
+    tip: 'Another light day. The Courtyard Memphis Downtown is a 5-10 minute walk from Beale Street. This is your fun night — live blues, world-class BBQ, cold beer. You\'ve earned it.',
+  },
+  {
+    day: 4,
+    date: 'Monday, March 24',
+    from: 'Memphis, TN',
+    to: 'Amarillo, TX',
+    miles: '~570',
+    hours: '~8',
+    depart: '7:00 AM',
+    hotel: 'SpringHill Suites by Marriott Amarillo',
+    hotelRating: '4.4 ★',
+    hotelPhone: '(806) 381-3400',
+    hotelAddr: '2301 Cinema Dr, Amarillo, TX 79124',
+    hotelUrl: 'https://www.marriott.com/en-us/hotels/amash-springhill-suites-amarillo/overview/',
+    highway: 'I-40 W all the way (through AR and into TX)',
+    tip: 'Big push day. I-40 W is yours from start to finish. Stop for fuel in Little Rock (~2 hrs). The landscape opens dramatically once you cross into Oklahoma. Spacious suite and free breakfast at SpringHill Amarillo.',
+  },
+  {
+    day: 5,
+    date: 'Tuesday, March 25',
+    from: 'Amarillo, TX',
+    to: 'Tempe, AZ',
+    miles: '~430',
+    hours: '~6',
+    depart: '8:00 AM',
+    hotel: 'Your New Apartment',
+    hotelRating: 'Home 🌵',
+    hotelPhone: '',
+    hotelAddr: 'Tempe, AZ',
+    hotelUrl: '',
+    highway: 'I-40 W → I-25 S (Albuquerque) → I-10 W → AZ-202 E',
+    tip: 'The final stretch. Stop in Albuquerque for lunch (~3 hrs). Drop the trailer at U-Haul Apache Station, 2340 E Apache Blvd, Tempe (4.1 stars). Then: keys to your new place. Welcome to Arizona.',
+  },
+];
+
+const timeline = [
+  {
+    week: 'This Weekend',
+    range: 'Feb 22-25',
+    phase: 'Apartment Hunting',
+    tasks: [
+      'Tour apartments in Tempe (Sat-Tue)',
+      'Put money down if you find the one',
+      'Photograph every room and take measurements',
+      'Confirm move-in date and trailer parking access',
+      'Ask about elevator and loading dock',
+    ],
+  },
+  {
+    week: 'Week of Feb 24',
+    range: 'Feb 24 — Mar 1',
+    phase: 'Book Everything',
+    tasks: [
+      'Book all 4 Marriott hotels through Bonvoy app',
+      'Book U-Haul 6x12 one-way trailer at uhaul.com',
+      'Order 60-80 boxes, tape, bubble wrap, wardrobe boxes',
+      'Schedule Jeep service (oil change, tires, hitch inspection)',
+      'Set up USPS mail forward starting March 25',
+      'Notify bank of upcoming address change',
+    ],
+  },
+  {
+    week: 'Week of Mar 3',
+    range: 'Mar 3-7',
+    phase: 'Begin Packing',
+    tasks: [
+      'Pack non-essentials: books, decor, artwork, off-season clothes',
+      'Pack storage areas, closets, and guest room',
+      'Label every box: contents + destination room in Tempe',
+      'Set up Arizona utilities: APS (electric), Southwest Gas, internet',
+      'Research Arizona car registration (required within 15 days of residency)',
+    ],
+  },
+  {
+    week: 'Week of Mar 10',
+    range: 'Mar 10-14',
+    phase: 'Mid-Pack Push',
+    tasks: [
+      'Pack kitchen down to 1-week survival kit',
+      'Get Jeep serviced',
+      'Confirm all 4 hotel reservations',
+      'Begin selling furniture you won\'t move on Facebook Marketplace',
+      'Cancel NH gym, subscriptions, and local memberships',
+    ],
+  },
+  {
+    week: 'Mar 14-15',
+    range: 'Sat-Sun',
+    phase: 'Purge Day',
+    tasks: [
+      'Final decision on everything: haul it, sell it, donate it, or trash it',
+      'Schedule donation pickup or Goodwill run',
+      'Eat down the freezer aggressively this week',
+    ],
+  },
+  {
+    week: 'Week of Mar 17',
+    range: 'Mar 17-20',
+    phase: 'Final Week',
+    tasks: [
+      'Pack everything except daily essentials (4-night kit)',
+      'Do landlord walkthrough, document apartment condition with photos',
+      'Arrange key return with landlord',
+      'Confirm trailer pickup appointment',
+      'Print all hotel confirmations and new lease documents',
+    ],
+  },
+  {
+    week: 'Thu, Mar 20',
+    range: 'Night Before',
+    phase: 'Load & Launch',
+    tasks: [
+      'Pick up U-Haul trailer from Milford, NH',
+      'Load trailer completely (heaviest items forward/low, near hitch)',
+      'Pack road trip bag: docs, meds, charger, snacks, clothes per day',
+      'Full gas tank on the Jeep',
+      'Set alarm for 6:00 AM',
+    ],
+  },
+];
+
+const logisticsCards = [
+  {
+    icon: '🚛',
+    title: 'Trailer: U-Haul 6×12',
+    body: `<strong>Pick up:</strong> Milford, NH (776 Elm St) — book as soon as lease is signed. End of March is peak moving season.<br/><br/><strong>Drop off:</strong> <a href="https://www.uhaul.com" target="_blank">U-Haul Apache Station</a>, 2340 E Apache Blvd, Tempe, AZ (4.1 stars). Open 7 AM-7 PM daily.<br/><br/><strong>Estimated cost:</strong> $500-700 one-way. Book at uhaul.com.`,
+  },
+  {
+    icon: '🚙',
+    title: 'Jeep Tow Checklist',
+    body: `Before departure: oil change, tire rotation, tow hitch inspection, check transmission fluid.<br/><br/>Wrangler Class III hitch is rated 3,500 lbs — a loaded 6x12 U-Haul runs ~1,800-2,200 lbs typically, so you're within range.<br/><br/>Verify your specific Wrangler trim's tow rating before booking the trailer.`,
+  },
+  {
+    icon: '🏨',
+    title: 'Hotel Booking',
+    body: `All 4 hotels are Marriott Bonvoy eligible. Book directly through the <strong>Marriott app</strong> for Bonvoy points and best rate guarantee.<br/><br/>Call each property to confirm <strong>trailer-friendly parking</strong> — especially Pittsburgh and Louisville where downtown parking can be tight.<br/><br/>Earliest check-in if arriving before 3 PM: call ahead and request early check-in as a Bonvoy member.`,
+  },
+  {
+    icon: '🌵',
+    title: 'Arizona Setup',
+    body: `<strong>Utilities to activate for March 25:</strong><br/>APS (electric) · Southwest Gas · Your internet provider of choice.<br/><br/><strong>Vehicle registration:</strong> Required within 15 days of establishing AZ residency. Visit servicearizona.com.<br/><br/><strong>Driver's license:</strong> Update to AZ license within 30 days at an MVD office.`,
+  },
+  {
+    icon: '📦',
+    title: 'Packing Strategy',
+    body: `For a 2-bedroom, target 60-80 boxes total. Order wardrobe boxes for hanging clothes — worth every penny.<br/><br/><strong>Loading order:</strong> Heaviest and largest first (furniture, appliances), closest to the hitch wall. Lighter boxes toward the rear and on top.<br/><br/>Label every box with <strong>contents + destination room</strong>. Solo unloading is much easier when you know exactly where everything goes.`,
+  },
+  {
+    icon: '📍',
+    title: 'Fuel Stops',
+    body: `<strong>Day 1:</strong> Binghamton, NY (~halfway)<br/><strong>Day 4:</strong> Little Rock, AR (~2 hrs from Memphis)<br/><strong>Day 5:</strong> Albuquerque, NM (lunch + fuel, ~3 hrs from Amarillo)<br/><br/>With a trailer, fuel economy drops to roughly 14-16 MPG. Budget ~$400-500 in fuel for the full trip based on current AZ/TX/TN gas prices.`,
+  },
+];
+
+// ─── RENDER MILESTONES ───
+const milestoneGrid = document.getElementById('milestoneGrid');
+milestones.forEach(m => {
+  const div = document.createElement('div');
+  div.className = `progress-milestone ${m.status}`;
+  const badgeClass = { done: 'badge-done', active: 'badge-active', upcoming: 'badge-upcoming' }[m.status];
+  const badgeText = { done: 'Done', active: 'Up Next', upcoming: 'Upcoming' }[m.status];
+  div.innerHTML = `
+    <div class="milestone-date">${m.date}</div>
+    <div class="milestone-title">${m.title}</div>
+    <div class="milestone-badge ${badgeClass}">${badgeText}</div>
+  `;
+  milestoneGrid.appendChild(div);
+});
+
+// ─── RENDER ROUTE LEGS ───
+const routeLegs = document.getElementById('routeLegs');
+legs.forEach((leg, i) => {
+  const div = document.createElement('div');
+  div.className = 'route-leg reveal';
+  const hotelLink = leg.hotelUrl
+    ? `<a href="${leg.hotelUrl}" target="_blank">${leg.hotel}</a>`
+    : `<span style="color:var(--sage)">${leg.hotel}</span>`;
+  div.innerHTML = `
+    <div class="route-leg-day">
+      <span class="day-number">${leg.day}</span>
+      <span class="day-word">Day</span>
+    </div>
+    <div class="route-leg-main">
+      <div class="leg-date">${leg.date}</div>
+      <div class="leg-route">${leg.from} <span>→</span> ${leg.to}</div>
+    </div>
+    <div class="route-leg-stats">
+      <div class="stat-item">
+        <span class="stat-value">${leg.miles}</span>
+        <span class="stat-unit">miles</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">${leg.hours}</span>
+        <span class="stat-unit">hrs driving</span>
+      </div>
+    </div>
+    <div class="route-leg-hotel">
+      <div class="hotel-label">Overnight</div>
+      <div class="hotel-name">${leg.hotel}</div>
+      <div class="hotel-stars">${leg.hotelRating}</div>
+    </div>
+    <div class="leg-details">
+      <div class="leg-details-inner">
+        <div class="leg-detail-block">
+          <h4>Highway</h4>
+          <p>${leg.highway}</p>
+          <br/>
+          <h4>Depart</h4>
+          <p>${leg.depart}</p>
+        </div>
+        <div class="leg-detail-block">
+          <h4>Hotel Details</h4>
+          <p>${hotelLink}${leg.hotelAddr ? '<br/>' + leg.hotelAddr : ''}${leg.hotelPhone ? '<br/>' + leg.hotelPhone : ''}</p>
+          <br/>
+          <h4>Notes</h4>
+          <p>${leg.tip}</p>
+        </div>
+      </div>
+    </div>
+  `;
+  div.addEventListener('click', () => {
+    div.classList.toggle('expanded');
+  });
+  routeLegs.appendChild(div);
+});
+
+// ─── RENDER TIMELINE ───
+const timelineGrid = document.getElementById('timelineGrid');
+timeline.forEach((week, i) => {
+  const dateCol = document.createElement('div');
+  dateCol.className = 'timeline-date-col reveal';
+  dateCol.innerHTML = `
+    <div class="timeline-date-week">${week.week}</div>
+    <div class="timeline-date-range">${week.range}</div>
+  `;
+
+  const tasksCol = document.createElement('div');
+  tasksCol.className = 'timeline-tasks-col reveal';
+  const tasksHtml = week.tasks.map(t => `
+    <li onclick="this.querySelector('.task-check').classList.toggle('checked')">
+      <span class="task-check"></span>
+      <span>${t}</span>
+    </li>
+  `).join('');
+  tasksCol.innerHTML = `
+    <div class="timeline-phase">${week.phase}</div>
+    <ul class="timeline-tasks">${tasksHtml}</ul>
+  `;
+
+  timelineGrid.appendChild(dateCol);
+  timelineGrid.appendChild(tasksCol);
+});
+
+// ─── RENDER LOGISTICS ───
+const logisticsGrid = document.getElementById('logisticsGrid');
+logisticsCards.forEach(card => {
+  const div = document.createElement('div');
+  div.className = 'logistics-card reveal';
+  div.innerHTML = `
+    <span class="logistics-icon">${card.icon}</span>
+    <h3>${card.title}</h3>
+    <p>${card.body}</p>
+  `;
+  logisticsGrid.appendChild(div);
+});
+
+// ─── INTERSECTION OBSERVER ───
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+</script>
+</body>
+</html>
