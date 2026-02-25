@@ -7,12 +7,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""
-  />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -487,6 +481,21 @@
       z-index: 1;
     }
 
+    .map-error {
+      width: 100%;
+      height: 100%;
+      min-height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--sand);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      padding: 1.25rem;
+      background: rgba(0,0,0,0.25);
+    }
+
     /* ─── TIMELINE SECTION ─── */
     .timeline-section {
       padding: 6rem 3rem;
@@ -956,11 +965,6 @@
   <p class="footer-note">Built for Jay Kolbenson · Shared move plan</p>
 </footer>
 
-<script
-  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-  crossorigin="">
-</script>
 <script>
 // ─── DATA ───
 const milestones = [
@@ -1300,7 +1304,7 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// ─── INTERACTIVE MAP (LEAFLET + OSM) ───
+// ─── INTERACTIVE MAP (GOOGLE MAPS + DIRECTIONS) ───
 const routeStops = [
   { city: 'Mason, NH', coords: [42.7437, -71.5901], day: 1 },
   { city: 'Pittsburgh, PA', coords: [40.4406, -79.9959], day: 1 },
@@ -1310,37 +1314,89 @@ const routeStops = [
   { city: 'Tempe, AZ', coords: [33.4255, -111.9400], day: 5 },
 ];
 
-if (window.L && document.getElementById('routeMap')) {
-  const map = L.map('routeMap', { scrollWheelZoom: false });
-
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 18,
-    attribution: '&copy; OpenStreetMap contributors',
-  }).addTo(map);
-
-  const lineCoords = routeStops.map(stop => stop.coords);
-  const routeLine = L.polyline(lineCoords, {
-    color: '#C8502A',
-    weight: 4,
-    opacity: 0.9,
-  }).addTo(map);
-
-  routeStops.forEach((stop, index) => {
-    const legLabel = index === 0 ? 'Start' : index === routeStops.length - 1 ? 'Finish' : `Stop ${index}`;
-    L.circleMarker(stop.coords, {
-      radius: 7,
-      color: '#FDFAF5',
-      weight: 2,
-      fillColor: '#C8502A',
-      fillOpacity: 0.95,
-    })
-      .addTo(map)
-      .bindPopup(`<strong>${stop.city}</strong><br/>${legLabel}`);
-  });
-
-  map.fitBounds(routeLine.getBounds(), { padding: [20, 20] });
+function renderMapError(message) {
+  const mapElement = document.getElementById('routeMap');
+  if (!mapElement) return;
+  mapElement.innerHTML = `<div class="map-error">${message}</div>`;
 }
 
+window.initRouteMap = function initRouteMap() {
+  const mapElement = document.getElementById('routeMap');
+  if (!mapElement || !window.google || !google.maps) return;
+
+  const toLatLng = (coords) => ({ lat: coords[0], lng: coords[1] });
+  const origin = toLatLng(routeStops[0].coords);
+  const destination = toLatLng(routeStops[routeStops.length - 1].coords);
+  const waypoints = routeStops.slice(1, -1).map(stop => ({
+    location: toLatLng(stop.coords),
+    stopover: true,
+  }));
+
+  const map = new google.maps.Map(mapElement, {
+    center: origin,
+    zoom: 5,
+    mapTypeControl: false,
+    streetViewControl: false,
+    fullscreenControl: true,
+  });
+
+  const directionsService = new google.maps.DirectionsService();
+  const directionsRenderer = new google.maps.DirectionsRenderer({
+    map,
+    suppressMarkers: true,
+    polylineOptions: {
+      strokeColor: '#C8502A',
+      strokeWeight: 5,
+      strokeOpacity: 0.95,
+    },
+  });
+
+  directionsService.route(
+    {
+      origin,
+      destination,
+      waypoints,
+      optimizeWaypoints: false,
+      travelMode: google.maps.TravelMode.DRIVING,
+      provideRouteAlternatives: false,
+    },
+    (result, status) => {
+      if (status !== 'OK' || !result) {
+        renderMapError(`Map route failed to load (${status}). Check Google Maps API key and referrer restrictions.`);
+        return;
+      }
+
+      directionsRenderer.setDirections(result);
+
+      routeStops.forEach((stop, index) => {
+        const label = index === 0 ? 'S' : (index === routeStops.length - 1 ? 'F' : `${index}`);
+        new google.maps.Marker({
+          position: toLatLng(stop.coords),
+          map,
+          title: stop.city,
+          label,
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: '#C8502A',
+            fillOpacity: 1,
+            strokeColor: '#FDFAF5',
+            strokeWeight: 2,
+            scale: 7,
+          },
+        });
+      });
+    }
+  );
+};
+
+window.addEventListener('error', (event) => {
+  const source = event?.target?.src || '';
+  if (source.includes('maps.googleapis.com/maps/api/js')) {
+    renderMapError('Google Maps failed to load. Verify internet access and your Maps JavaScript API key.');
+  }
+}, true);
+
 </script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&callback=initRouteMap"></script>
 </body>
 </html>
