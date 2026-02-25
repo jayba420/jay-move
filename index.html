@@ -7,6 +7,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -469,10 +475,16 @@
       background: #111;
     }
 
-    .map-container iframe {
+    .map-container iframe,
+    .map-canvas {
       width: 100%;
       height: 100%;
       border: none;
+    }
+
+    .map-canvas {
+      min-height: 500px;
+      z-index: 1;
     }
 
     /* ─── TIMELINE SECTION ─── */
@@ -883,12 +895,7 @@
   <p class="section-label">Route Map</p>
   <h2 class="section-title reveal">Mason → <em>Tempe</em></h2>
   <div class="map-container reveal">
-    <iframe
-      src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&origin=Mason,NH&destination=Tempe,AZ&waypoints=Pittsburgh,PA|Louisville,KY|Memphis,TN|Amarillo,TX&mode=driving"
-      allowfullscreen
-      loading="lazy"
-      title="Move route from Mason NH to Tempe AZ">
-    </iframe>
+    <div id="routeMap" class="map-canvas" aria-label="Interactive route map from Mason NH to Tempe AZ"></div>
   </div>
   <p style="font-size:0.75rem; color: var(--mid-gray); margin-top: 1rem;">
     Route: I-93 S → I-90 W → I-84 W → I-81 S → I-76 W → I-79 S → I-64 W → I-65 S → I-40 W → I-25 S → I-10 W → AZ-202 E
@@ -949,6 +956,11 @@
   <p class="footer-note">Built for Jay Kolbenson · Shared move plan</p>
 </footer>
 
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin="">
+</script>
 <script>
 // ─── DATA ───
 const milestones = [
@@ -1287,6 +1299,47 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ─── INTERACTIVE MAP (LEAFLET + OSM) ───
+const routeStops = [
+  { city: 'Mason, NH', coords: [42.7437, -71.5901], day: 1 },
+  { city: 'Pittsburgh, PA', coords: [40.4406, -79.9959], day: 1 },
+  { city: 'Louisville, KY', coords: [38.2527, -85.7585], day: 2 },
+  { city: 'Memphis, TN', coords: [35.1495, -90.0490], day: 3 },
+  { city: 'Amarillo, TX', coords: [35.2220, -101.8313], day: 4 },
+  { city: 'Tempe, AZ', coords: [33.4255, -111.9400], day: 5 },
+];
+
+if (window.L && document.getElementById('routeMap')) {
+  const map = L.map('routeMap', { scrollWheelZoom: false });
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: '&copy; OpenStreetMap contributors',
+  }).addTo(map);
+
+  const lineCoords = routeStops.map(stop => stop.coords);
+  const routeLine = L.polyline(lineCoords, {
+    color: '#C8502A',
+    weight: 4,
+    opacity: 0.9,
+  }).addTo(map);
+
+  routeStops.forEach((stop, index) => {
+    const legLabel = index === 0 ? 'Start' : index === routeStops.length - 1 ? 'Finish' : `Stop ${index}`;
+    L.circleMarker(stop.coords, {
+      radius: 7,
+      color: '#FDFAF5',
+      weight: 2,
+      fillColor: '#C8502A',
+      fillOpacity: 0.95,
+    })
+      .addTo(map)
+      .bindPopup(`<strong>${stop.city}</strong><br/>${legLabel}`);
+  });
+
+  map.fitBounds(routeLine.getBounds(), { padding: [20, 20] });
+}
 
 </script>
 </body>
