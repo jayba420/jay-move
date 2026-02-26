@@ -21,6 +21,9 @@
       --mid-gray: #6B5E56;
       --light-tan: #EAD9C0;
       --white: #FDFAF5;
+      --danger: #C8502A;
+      --warning: #D4943A;
+      --success: #7A9E7E;
     }
 
     html { scroll-behavior: smooth; }
@@ -33,7 +36,47 @@
       overflow-x: hidden;
     }
 
-    /* ─── HERO ─── */
+    /* NAV */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(26,22,20,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .nav-brand {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.08em;
+      color: var(--sand);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.75rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid-gray);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--sand); }
+
+    /* HERO */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -42,20 +85,17 @@
       padding: 4rem 3rem 5rem;
       position: relative;
       overflow: hidden;
-      background: var(--night);
     }
 
     .hero-bg {
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 80% 60% at 60% 70%, rgba(200, 80, 42, 0.18) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 40% at 20% 40%, rgba(91, 143, 168, 0.12) 0%, transparent 60%),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cdefs%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+        radial-gradient(ellipse 80% 60% at 60% 70%, rgba(200,80,42,0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 20% 40%, rgba(91,143,168,0.1) 0%, transparent 60%);
       z-index: 0;
     }
 
-    /* Desert horizon illustration */
     .hero-horizon {
       position: absolute;
       bottom: 0;
@@ -65,18 +105,9 @@
       z-index: 0;
     }
 
-    /* Saguaro silhouettes */
-    .saguaro {
-      position: absolute;
-      bottom: 0;
-      fill: #110E0C;
-    }
-
     .hero-eyebrow {
       position: relative;
       z-index: 1;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 500;
       font-size: 0.75rem;
       letter-spacing: 0.25em;
       text-transform: uppercase;
@@ -93,22 +124,17 @@
       font-size: clamp(5rem, 14vw, 13rem);
       line-height: 0.88;
       color: var(--sand);
-      letter-spacing: 0.01em;
       opacity: 0;
       animation: fadeUp 0.9s ease forwards 0.4s;
     }
 
-    .hero-title span {
-      color: var(--rust);
-      display: block;
-    }
+    .hero-title span { color: var(--rust); display: block; }
 
     .hero-subtitle {
       position: relative;
       z-index: 1;
       margin-top: 2rem;
       font-size: 1rem;
-      font-weight: 300;
       color: var(--mid-gray);
       max-width: 480px;
       line-height: 1.6;
@@ -122,18 +148,15 @@
       display: flex;
       gap: 2.5rem;
       margin-top: 2.5rem;
+      flex-wrap: wrap;
       opacity: 0;
       animation: fadeUp 0.9s ease forwards 0.8s;
     }
 
-    .hero-meta-item {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-    }
+    .hero-meta-item { display: flex; flex-direction: column; gap: 0.25rem; }
 
     .hero-meta-label {
-      font-size: 0.65rem;
+      font-size: 0.6rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--mid-gray);
@@ -141,206 +164,55 @@
 
     .hero-meta-value {
       font-family: 'DM Serif Display', serif;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       color: var(--sand);
     }
 
-    .scroll-hint {
-      position: absolute;
-      bottom: 2rem;
-      right: 3rem;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--mid-gray);
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      opacity: 0;
-      animation: fadeIn 1s ease forwards 1.5s;
+    /* SECTIONS */
+    .section {
+      padding: 5rem 3rem;
     }
 
-    .scroll-hint::after {
-      content: '';
-      width: 1px;
-      height: 40px;
-      background: linear-gradient(to bottom, var(--mid-gray), transparent);
-      animation: scrollLine 2s ease infinite 2s;
-    }
+    .section-alt { background: var(--warm-gray); }
+    .section-dark { background: var(--night); }
 
-    @keyframes scrollLine {
-      0% { transform: scaleY(0); transform-origin: top; opacity: 1; }
-      50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
-      51% { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
-      100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
-    }
-
-    /* ─── PROGRESS BAR ─── */
-    .progress-section {
-      background: var(--warm-gray);
-      padding: 4rem 3rem;
-      position: relative;
-    }
-
-    .section-label {
+    .section-eyebrow {
       font-size: 0.65rem;
       letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--rust);
-      margin-bottom: 2rem;
-    }
-
-    .progress-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 1px;
-      background: rgba(255,255,255,0.06);
-    }
-
-    .progress-milestone {
-      background: var(--warm-gray);
-      padding: 1.75rem 1.5rem;
-      cursor: pointer;
-      transition: background 0.2s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .progress-milestone:hover { background: rgba(255,255,255,0.04); }
-
-    .progress-milestone.done::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 3px;
-      background: var(--sage);
-    }
-
-    .progress-milestone.active::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 3px;
-      background: var(--rust);
-    }
-
-    .milestone-date {
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--mid-gray);
-      margin-bottom: 0.4rem;
-    }
-
-    .milestone-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.05rem;
-      color: var(--sand);
-      line-height: 1.3;
-    }
-
-    .milestone-badge {
-      margin-top: 0.75rem;
-      display: inline-block;
-      font-size: 0.6rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 0.25rem 0.6rem;
-      border-radius: 2px;
-    }
-
-    .badge-done { background: rgba(122, 158, 126, 0.2); color: var(--sage); }
-    .badge-active { background: rgba(200, 80, 42, 0.2); color: var(--rust); }
-    .badge-upcoming { background: rgba(107, 94, 86, 0.2); color: var(--mid-gray); }
-
-    /* ─── ROUTE SECTION ─── */
-    .route-section {
-      padding: 6rem 3rem;
-      background: var(--night);
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 3.5rem;
+      margin-bottom: 0.75rem;
     }
 
     .section-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
       line-height: 1;
       color: var(--sand);
+      margin-bottom: 2.5rem;
     }
 
-    .section-title em {
-      color: var(--rust);
-      font-style: normal;
-    }
+    .section-title em { color: var(--rust); font-style: normal; }
 
-    .section-note {
-      font-size: 0.8rem;
-      color: var(--mid-gray);
-      text-align: right;
-      max-width: 200px;
-      line-height: 1.5;
-    }
-
-    .route-legs {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
+    /* PROGRESS BAR */
+    .progress-bar-wrap {
       background: rgba(255,255,255,0.05);
+      height: 4px;
+      border-radius: 2px;
+      margin-bottom: 3rem;
+      overflow: hidden;
     }
 
-    .route-leg {
-      display: grid;
-      grid-template-columns: 80px 1fr 1fr 1fr;
-      gap: 0;
-      background: var(--night);
-      transition: background 0.2s ease;
-      cursor: pointer;
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(to right, var(--rust), var(--warning));
+      border-radius: 2px;
+      transition: width 1s ease;
     }
 
-    .route-leg:hover { background: rgba(255,255,255,0.03); }
-    .route-leg.expanded { background: var(--warm-gray); }
-
-    .route-leg-day {
+    .progress-label {
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 2rem 1rem;
-      background: rgba(255,255,255,0.03);
-      border-right: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .day-number {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.5rem;
-      color: var(--rust);
-      line-height: 1;
-    }
-
-    .day-word {
-      font-size: 0.55rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--mid-gray);
-    }
-
-    .route-leg-main {
-      padding: 2rem;
-      border-right: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .leg-date {
+      justify-content: space-between;
       font-size: 0.65rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
@@ -348,208 +220,138 @@
       margin-bottom: 0.5rem;
     }
 
-    .leg-route {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.25rem;
-      color: var(--sand);
-      line-height: 1.3;
+    /* BOOKING TO-DOS */
+    .todos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
     }
 
-    .leg-route span {
-      color: var(--rust);
+    .todo-card {
+      background: var(--warm-gray);
+      padding: 1.75rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      position: relative;
+      overflow: hidden;
     }
 
-    .route-leg-stats {
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 0.75rem;
-      border-right: 1px solid rgba(255,255,255,0.05);
+    .todo-card:hover { background: rgba(255,255,255,0.04); }
+
+    .todo-card.done { opacity: 0.5; }
+
+    .todo-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--rust);
+      transition: background 0.2s;
     }
 
-    .stat-item {
-      display: flex;
-      align-items: baseline;
-      gap: 0.4rem;
-    }
+    .todo-card.done::before { background: var(--sage); }
 
-    .stat-value {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.5rem;
-      color: var(--sand);
-    }
-
-    .stat-unit {
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--mid-gray);
-    }
-
-    .route-leg-hotel {
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .hotel-label {
-      font-size: 0.6rem;
+    .todo-urgency {
+      font-size: 0.55rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--mid-gray);
+      color: var(--rust);
       margin-bottom: 0.4rem;
     }
 
-    .hotel-name {
-      font-size: 0.9rem;
-      font-weight: 500;
+    .todo-card.done .todo-urgency { color: var(--sage); }
+
+    .todo-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.05rem;
       color: var(--sand);
-      line-height: 1.4;
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
     }
 
-    .hotel-stars {
-      margin-top: 0.35rem;
-      color: var(--rust);
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-    }
-
-    .leg-details {
-      display: none;
-      grid-column: 1 / -1;
-      padding: 0 2rem 2rem 2rem;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .route-leg.expanded .leg-details { display: block; }
-
-    .leg-details-inner {
-      padding-top: 1.5rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-    }
-
-    .leg-detail-block h4 {
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--rust);
-      margin-bottom: 0.75rem;
-    }
-
-    .leg-detail-block p {
-      font-size: 0.875rem;
+    .todo-desc {
+      font-size: 0.8rem;
       color: var(--mid-gray);
-      line-height: 1.7;
+      line-height: 1.6;
     }
 
-    .leg-detail-block a {
+    .todo-desc a {
       color: var(--sky);
       text-decoration: none;
     }
 
-    .leg-detail-block a:hover { text-decoration: underline; }
+    .todo-desc a:hover { text-decoration: underline; }
 
-    /* ─── MAP SECTION ─── */
-    .map-section {
-      background: var(--warm-gray);
-      padding: 5rem 3rem;
-    }
-
-    .map-container {
-      width: 100%;
-      height: 500px;
-      border-radius: 4px;
-      overflow: hidden;
-      position: relative;
-      margin-top: 2.5rem;
-      background: #111;
-    }
-
-    .map-container iframe,
-    .map-canvas {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    .map-canvas {
-      min-height: 500px;
-      z-index: 1;
-    }
-
-    .map-error {
-      width: 100%;
-      height: 100%;
-      min-height: 500px;
+    .todo-check {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 20px;
+      height: 20px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 3px;
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      color: var(--sand);
-      font-size: 0.95rem;
-      line-height: 1.5;
-      padding: 1.25rem;
-      background: rgba(0,0,0,0.25);
+      font-size: 0.7rem;
+      color: var(--night);
+      transition: all 0.2s;
     }
 
-    /* ─── TIMELINE SECTION ─── */
-    .timeline-section {
-      padding: 6rem 3rem;
-      background: var(--night);
+    .todo-card.done .todo-check {
+      background: var(--sage);
+      border-color: var(--sage);
     }
 
-    .timeline-grid {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 0;
+    .todo-card.done .todo-check::after { content: '✓'; }
+
+    /* TIMELINE */
+    .timeline-wrap {
       position: relative;
     }
 
-    .timeline-grid::before {
+    .timeline-wrap::before {
       content: '';
       position: absolute;
-      left: 199px;
+      left: 180px;
       top: 0;
       bottom: 0;
       width: 1px;
-      background: rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.07);
     }
 
-    .timeline-week {
-      display: contents;
-    }
-
-    .timeline-date-col {
-      padding: 2.5rem 2.5rem 2.5rem 0;
+    .timeline-row {
+      display: grid;
+      grid-template-columns: 180px 1fr;
       border-bottom: 1px solid rgba(255,255,255,0.05);
     }
 
-    .timeline-date-week {
+    .timeline-date {
+      padding: 2rem 2rem 2rem 0;
+    }
+
+    .timeline-week {
       font-size: 0.6rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--rust);
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.3rem;
     }
 
-    .timeline-date-range {
+    .timeline-range {
       font-family: 'DM Serif Display', serif;
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: var(--mid-gray);
     }
 
-    .timeline-tasks-col {
-      padding: 2.5rem 0 2.5rem 2.5rem;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+    .timeline-content {
+      padding: 2rem 0 2rem 2.5rem;
     }
 
     .timeline-phase {
       font-family: 'DM Serif Display', serif;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       color: var(--sand);
       margin-bottom: 1rem;
     }
@@ -569,22 +371,23 @@
       color: var(--mid-gray);
       line-height: 1.6;
       cursor: pointer;
-      transition: color 0.15s ease;
+      transition: color 0.15s;
     }
 
     .timeline-tasks li:hover { color: var(--sand); }
+    .timeline-tasks li.checked { color: rgba(107,94,86,0.4); text-decoration: line-through; }
 
     .task-check {
       width: 16px;
       height: 16px;
-      border: 1px solid rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.15);
       border-radius: 2px;
       flex-shrink: 0;
       margin-top: 3px;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.2s ease;
+      transition: all 0.2s;
     }
 
     .task-check.checked {
@@ -594,125 +397,430 @@
 
     .task-check.checked::after {
       content: '✓';
-      font-size: 0.6rem;
+      font-size: 0.55rem;
       color: var(--night);
-      font-weight: 600;
+      font-weight: 700;
     }
 
-    /* ─── TRAILER SECTION ─── */
-    .logistics-section {
-      background: var(--warm-gray);
-      padding: 5rem 3rem;
+    .timeline-row.blackout {
+      background: rgba(200,80,42,0.04);
+      border-left: 3px solid rgba(200,80,42,0.3);
     }
 
-    .logistics-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    /* PACKING ROOMS */
+    .rooms-tabs {
+      display: flex;
       gap: 1px;
       background: rgba(255,255,255,0.06);
-      margin-top: 3rem;
+      margin-bottom: 1px;
     }
 
-    .logistics-card {
+    .room-tab {
+      flex: 1;
+      padding: 1rem;
+      background: var(--warm-gray);
+      cursor: pointer;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mid-gray);
+      text-align: center;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .room-tab:hover { background: rgba(255,255,255,0.03); color: var(--sand); }
+    .room-tab.active { background: var(--rust); color: var(--sand); }
+
+    .room-panel {
+      display: none;
       background: var(--warm-gray);
       padding: 2.5rem;
     }
 
-    .logistics-icon {
-      font-size: 2rem;
-      margin-bottom: 1rem;
+    .room-panel.active { display: block; }
+
+    .room-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 2rem;
+    }
+
+    .room-panel-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      color: var(--sand);
+    }
+
+    .room-progress {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mid-gray);
+      text-align: right;
+    }
+
+    .room-progress-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      color: var(--rust);
       display: block;
     }
 
-    .logistics-card h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.25rem;
-      color: var(--sand);
-      margin-bottom: 0.75rem;
+    .pack-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0.4rem;
     }
 
-    .logistics-card p {
+    .pack-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.6rem 0.75rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background 0.15s;
+      font-size: 0.825rem;
+      color: var(--mid-gray);
+    }
+
+    .pack-item:hover { background: rgba(255,255,255,0.04); }
+
+    .pack-item.packed {
+      color: rgba(107,94,86,0.4);
+      text-decoration: line-through;
+    }
+
+    .pack-item .item-check {
+      width: 14px;
+      height: 14px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 2px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .pack-item.packed .item-check {
+      background: var(--sage);
+      border-color: var(--sage);
+    }
+
+    .pack-item.packed .item-check::after {
+      content: '✓';
+      font-size: 0.5rem;
+      color: var(--night);
+      font-weight: 700;
+    }
+
+    /* BRING vs LEAVE vs BUY */
+    .decision-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .decision-col {
+      background: var(--night);
+      padding: 2rem;
+    }
+
+    .decision-col-header {
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .decision-col.bring .decision-col-header { color: var(--sage); }
+    .decision-col.leave .decision-col-header { color: var(--rust); }
+    .decision-col.buy .decision-col-header { color: var(--sky); }
+
+    .decision-items {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .decision-item {
+      font-size: 0.825rem;
+      color: var(--mid-gray);
+      padding: 0.4rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      line-height: 1.4;
+    }
+
+    /* FURNITURE TRACKER */
+    .furniture-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .furniture-row {
+      display: grid;
+      grid-template-columns: 1fr 120px 160px;
+      background: var(--night);
+      transition: background 0.2s;
+    }
+
+    .furniture-row:hover { background: rgba(255,255,255,0.02); }
+
+    .furniture-row.header {
+      background: var(--warm-gray);
+    }
+
+    .furniture-cell {
+      padding: 1rem 1.25rem;
+      font-size: 0.825rem;
+      color: var(--mid-gray);
+      border-right: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .furniture-row.header .furniture-cell {
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mid-gray);
+    }
+
+    .furniture-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 0.95rem;
+      color: var(--sand);
+    }
+
+    .furniture-status {
+      display: inline-block;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      border-radius: 2px;
+    }
+
+    .status-waiting { background: rgba(212,148,58,0.15); color: var(--warning); }
+    .status-bring { background: rgba(122,158,126,0.15); color: var(--sage); }
+    .status-leave { background: rgba(200,80,42,0.15); color: var(--rust); }
+    .status-sell { background: rgba(91,143,168,0.15); color: var(--sky); }
+
+    /* ROUTE */
+    .route-legs {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .route-leg {
+      display: grid;
+      grid-template-columns: 70px 1fr 1fr 1fr;
+      background: var(--night);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .route-leg:hover { background: rgba(255,255,255,0.03); }
+    .route-leg.expanded { background: var(--warm-gray); }
+
+    .route-leg-day {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 1.75rem 1rem;
+      background: rgba(255,255,255,0.03);
+      border-right: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .day-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.25rem;
+      color: var(--rust);
+      line-height: 1;
+    }
+
+    .day-word {
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid-gray);
+    }
+
+    .route-leg-main { padding: 1.75rem; border-right: 1px solid rgba(255,255,255,0.05); }
+
+    .leg-date {
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mid-gray);
+      margin-bottom: 0.4rem;
+    }
+
+    .leg-route {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      color: var(--sand);
+      line-height: 1.3;
+    }
+
+    .leg-route span { color: var(--rust); }
+
+    .route-leg-stats {
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.6rem;
+      border-right: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .stat-item { display: flex; align-items: baseline; gap: 0.4rem; }
+
+    .stat-value {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      color: var(--sand);
+    }
+
+    .stat-unit {
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid-gray);
+    }
+
+    .route-leg-hotel {
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hotel-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid-gray);
+      margin-bottom: 0.35rem;
+    }
+
+    .hotel-name {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--sand);
+      line-height: 1.4;
+    }
+
+    .hotel-stars { margin-top: 0.3rem; color: var(--rust); font-size: 0.7rem; }
+
+    .leg-details {
+      display: none;
+      grid-column: 1 / -1;
+      padding: 0 2rem 2rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .route-leg.expanded .leg-details { display: block; }
+
+    .leg-details-inner {
+      padding-top: 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .leg-detail-block h4 {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 0.6rem;
+    }
+
+    .leg-detail-block p {
       font-size: 0.875rem;
       color: var(--mid-gray);
       line-height: 1.7;
     }
 
-    .logistics-card strong {
-      color: var(--sand);
-      font-weight: 500;
+    .leg-detail-block a { color: var(--sky); text-decoration: none; }
+    .leg-detail-block a:hover { text-decoration: underline; }
+
+    /* BUDGET */
+    .budget-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
+      margin-bottom: 2rem;
     }
 
-    .logistics-card a {
-      color: var(--sky);
-      text-decoration: none;
-      font-size: 0.875rem;
+    .budget-card {
+      background: var(--warm-gray);
+      padding: 1.75rem;
     }
 
-    .logistics-card a:hover { text-decoration: underline; }
-
-    /* ─── PLAN B SECTION ─── */
-    .planb-section {
-      padding: 5rem 3rem;
-      background: var(--night);
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .planb-banner {
-      background: rgba(200, 80, 42, 0.08);
-      border: 1px solid rgba(200, 80, 42, 0.25);
-      border-radius: 4px;
-      padding: 2.5rem;
-      margin-top: 2.5rem;
-    }
-
-    .planb-eyebrow {
+    .budget-category {
       font-size: 0.6rem;
-      letter-spacing: 0.25em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
+      color: var(--mid-gray);
+      margin-bottom: 0.4rem;
+    }
+
+    .budget-amount {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.8rem;
+      color: var(--sand);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .budget-note {
+      font-size: 0.75rem;
+      color: var(--mid-gray);
+    }
+
+    .budget-total-bar {
+      background: var(--warm-gray);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .budget-total-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid-gray);
+    }
+
+    .budget-total-amount {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.5rem;
       color: var(--rust);
-      margin-bottom: 1rem;
     }
 
-    .planb-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.6rem;
-      color: var(--sand);
-      margin-bottom: 1rem;
-    }
-
-    .planb-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1.5rem;
-      font-size: 0.875rem;
-    }
-
-    .planb-table th {
-      text-align: left;
-      font-size: 0.6rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
+    .budget-total-range {
+      font-size: 0.75rem;
       color: var(--mid-gray);
-      padding: 0 0 0.75rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
 
-    .planb-table td {
-      padding: 0.85rem 0;
-      color: var(--mid-gray);
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .planb-table td:first-child {
-      color: var(--sand);
-      font-family: 'DM Serif Display', serif;
-      font-size: 0.95rem;
-      padding-right: 2rem;
-    }
-
-    /* ─── FOOTER ─── */
+    /* FOOTER */
     .footer {
-      padding: 3rem;
+      padding: 2.5rem 3rem;
       background: #0E0B09;
       display: flex;
       justify-content: space-between;
@@ -721,25 +829,16 @@
 
     .footer-brand {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       color: var(--mid-gray);
-      letter-spacing: 0.05em;
     }
 
-    .footer-note {
-      font-size: 0.75rem;
-      color: rgba(107,94,86,0.5);
-    }
+    .footer-note { font-size: 0.7rem; color: rgba(107,94,86,0.5); }
 
-    /* ─── ANIMATIONS ─── */
+    /* ANIMATIONS */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
     }
 
     .reveal {
@@ -748,123 +847,88 @@
       transition: opacity 0.7s ease, transform 0.7s ease;
     }
 
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* ─── RESPONSIVE ─── */
+    /* RESPONSIVE */
     @media (max-width: 768px) {
-      .hero { padding: 3rem 1.5rem 4rem; }
-      .progress-section, .route-section, .timeline-section,
-      .logistics-section, .planb-section { padding: 3rem 1.5rem; }
-      .map-section { padding: 3rem 1.5rem; }
-
-      .route-leg {
-        grid-template-columns: 60px 1fr;
-      }
-
-      .route-leg-stats,
-      .route-leg-hotel {
-        display: none;
-      }
-
-      .timeline-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .timeline-grid::before { display: none; }
-
-      .timeline-date-col {
-        padding: 1.5rem 0 0.5rem;
-        border-bottom: none;
-      }
-
-      .timeline-tasks-col {
-        padding: 0.5rem 0 2rem;
-      }
-
-      .footer {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
-      }
-
-      .leg-details-inner {
-        grid-template-columns: 1fr;
-      }
+      .nav-links { display: none; }
+      .hero { padding: 5rem 1.5rem 3rem; }
+      .section { padding: 3rem 1.5rem; }
+      .route-leg { grid-template-columns: 60px 1fr; }
+      .route-leg-stats, .route-leg-hotel { display: none; }
+      .timeline-wrap::before { display: none; }
+      .timeline-row { grid-template-columns: 1fr; }
+      .timeline-date { padding: 1.5rem 0 0.5rem; }
+      .timeline-content { padding: 0.5rem 0 1.5rem; }
+      .decision-grid { grid-template-columns: 1fr; }
+      .furniture-row { grid-template-columns: 1fr 100px; }
+      .footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+      .leg-details-inner { grid-template-columns: 1fr; }
+      .rooms-tabs { flex-wrap: wrap; }
     }
   </style>
 </head>
 <body>
 
-<!-- ─── HERO ─── -->
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">Mason ➔ Tempe</div>
+  <ul class="nav-links">
+    <li><a href="#bookings">Bookings</a></li>
+    <li><a href="#timeline">Timeline</a></li>
+    <li><a href="#packing">Packing</a></li>
+    <li><a href="#decisions">Decisions</a></li>
+    <li><a href="#furniture">Furniture</a></li>
+    <li><a href="#route">Route</a></li>
+    <li><a href="#budget">Budget</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
-
-  <!-- SVG Saguaro desert silhouette -->
   <svg class="hero-horizon" viewBox="0 0 1440 400" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
-    <!-- Mountains -->
     <path d="M0 300 L120 180 L200 240 L320 120 L440 200 L560 160 L680 220 L760 140 L880 200 L1000 100 L1120 180 L1240 130 L1360 160 L1440 140 L1440 400 L0 400Z" fill="#0D0A08" opacity="0.9"/>
     <path d="M0 340 L80 280 L160 310 L280 250 L400 290 L520 260 L640 290 L720 270 L840 295 L960 255 L1080 280 L1200 260 L1320 275 L1440 265 L1440 400 L0 400Z" fill="#0E0B09" opacity="0.95"/>
-
-    <!-- Saguaro 1 -->
-    <g transform="translate(200, 200)">
+    <g transform="translate(200,200)">
       <rect x="-6" y="-120" width="12" height="120" fill="#0A0706"/>
       <rect x="-4" y="-80" width="30" height="8" fill="#0A0706"/>
       <rect x="22" y="-110" width="8" height="40" fill="#0A0706"/>
       <rect x="-30" y="-95" width="8" height="30" fill="#0A0706"/>
       <rect x="-34" y="-110" width="8" height="40" fill="#0A0706"/>
     </g>
-
-    <!-- Saguaro 2 -->
-    <g transform="translate(560, 220)">
+    <g transform="translate(560,220)">
       <rect x="-5" y="-90" width="10" height="90" fill="#0A0706"/>
       <rect x="-4" y="-60" width="22" height="6" fill="#0A0706"/>
       <rect x="14" y="-80" width="6" height="30" fill="#0A0706"/>
       <rect x="-22" y="-72" width="6" height="22" fill="#0A0706"/>
     </g>
-
-    <!-- Saguaro 3 big -->
-    <g transform="translate(1000, 185)">
+    <g transform="translate(1000,185)">
       <rect x="-8" y="-150" width="16" height="150" fill="#0A0706"/>
       <rect x="-6" y="-100" width="38" height="10" fill="#0A0706"/>
       <rect x="28" y="-135" width="10" height="50" fill="#0A0706"/>
       <rect x="-38" y="-118" width="10" height="36" fill="#0A0706"/>
       <rect x="-44" y="-135" width="10" height="50" fill="#0A0706"/>
     </g>
-
-    <!-- Saguaro 4 -->
-    <g transform="translate(1280, 200)">
+    <g transform="translate(1280,200)">
       <rect x="-5" y="-100" width="10" height="100" fill="#0A0706"/>
       <rect x="-4" y="-68" width="26" height="7" fill="#0A0706"/>
       <rect x="18" y="-90" width="7" height="34" fill="#0A0706"/>
     </g>
-
-    <!-- Ground -->
     <rect x="0" y="340" width="1440" height="60" fill="#0A0706"/>
   </svg>
 
-  <div class="hero-eyebrow">Manchester, NH → Tempe, AZ</div>
-
-  <h1 class="hero-title">
-    Moving
-    <span>West</span>
-  </h1>
-
-  <p class="hero-subtitle">
-    Jay Kolbenson's move from New Hampshire to Arizona.
-    2,280 miles. 5 days. One Jeep, one trailer, and a new chapter.
-  </p>
-
+  <div class="hero-eyebrow">Manchester, NH ➔ Tempe, AZ</div>
+  <h1 class="hero-title">Moving<span>West</span></h1>
+  <p class="hero-subtitle">Jay Kolbenson's move from New Hampshire to Arizona. 2,280 miles. 5 days. A new chapter.</p>
   <div class="hero-meta">
     <div class="hero-meta-item">
       <span class="hero-meta-label">Departure</span>
-      <span class="hero-meta-value">March 21, 2025</span>
+      <span class="hero-meta-value">March 20, 2025</span>
     </div>
     <div class="hero-meta-item">
       <span class="hero-meta-label">Arrival</span>
-      <span class="hero-meta-value">March 25, 2025</span>
+      <span class="hero-meta-value">March 24, 2025</span>
     </div>
     <div class="hero-meta-item">
       <span class="hero-meta-label">Total Miles</span>
@@ -874,336 +938,519 @@
       <span class="hero-meta-label">Driving Days</span>
       <span class="hero-meta-value">5</span>
     </div>
-  </div>
-
-  <div class="scroll-hint">Scroll</div>
-</section>
-
-<!-- ─── MILESTONES ─── -->
-<section class="progress-section">
-  <p class="section-label">Key Milestones</p>
-  <div class="progress-grid" id="milestoneGrid">
-    <!-- Filled by JS -->
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Budget</span>
+      <span class="hero-meta-value">$3,000–5,000</span>
+    </div>
   </div>
 </section>
 
-<!-- ─── ROUTE ─── -->
-<section class="route-section">
-  <div class="section-header reveal">
-    <h2 class="section-title">The<br/><em>Route</em></h2>
-    <p class="section-note">Click any day to expand route details and hotel info</p>
-  </div>
+<!-- BOOKINGS -->
+<section class="section section-alt" id="bookings">
+  <p class="section-eyebrow">Action Items</p>
+  <h2 class="section-title reveal">Book &amp; <em>Do</em></h2>
+  <div class="todos-grid" id="todosGrid"></div>
+</section>
 
-  <div class="route-legs" id="routeLegs">
-    <!-- Filled by JS -->
+<!-- TIMELINE -->
+<section class="section section-dark" id="timeline">
+  <p class="section-eyebrow">Pre-Move Plan</p>
+  <h2 class="section-title reveal">Week by<br/><em>Week</em></h2>
+  <div class="timeline-wrap" id="timelineGrid"></div>
+</section>
+
+<!-- PACKING -->
+<section class="section section-alt" id="packing">
+  <p class="section-eyebrow">Room by Room</p>
+  <h2 class="section-title reveal">Packing<br/><em>Checklist</em></h2>
+  <div class="rooms-tabs" id="roomTabs"></div>
+  <div id="roomPanels"></div>
+</section>
+
+<!-- DECISIONS -->
+<section class="section section-dark" id="decisions">
+  <p class="section-eyebrow">What Goes Where</p>
+  <h2 class="section-title reveal">Bring / Leave /<br/><em>Buy New</em></h2>
+  <div class="decision-grid" id="decisionGrid"></div>
+</section>
+
+<!-- FURNITURE -->
+<section class="section section-alt" id="furniture">
+  <p class="section-eyebrow">Waiting on Her Housing Decision</p>
+  <h2 class="section-title reveal">Furniture<br/><em>Tracker</em></h2>
+  <p style="font-size:0.875rem; color:var(--mid-gray); margin-bottom:2rem; line-height:1.7;">Status updates once she confirms whether she's staying in the house or moving to a 1BR. Click any row to cycle through status options.</p>
+  <div class="furniture-grid" id="furnitureGrid"></div>
+</section>
+
+<!-- ROUTE -->
+<section class="section section-dark" id="route">
+  <p class="section-eyebrow">5 Days, 2,280 Miles</p>
+  <h2 class="section-title reveal">The<br/><em>Route</em></h2>
+  <div class="route-legs" id="routeLegs"></div>
+  <div class="map-container reveal" style="margin-top:2rem; height:420px; border-radius:3px; overflow:hidden;">
+    <iframe src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&origin=Mason,NH&destination=Tempe,AZ&waypoints=Pittsburgh,PA|Louisville,KY|Memphis,TN|Amarillo,TX&mode=driving" allowfullscreen loading="lazy" title="Move route" style="width:100%;height:100%;border:none;"></iframe>
   </div>
 </section>
 
-<!-- ─── MAP ─── -->
-<section class="map-section">
-  <p class="section-label">Route Map</p>
-  <h2 class="section-title reveal">Mason → <em>Tempe</em></h2>
-  <div class="map-container reveal">
-    <div id="routeMap" class="map-canvas" aria-label="Interactive route map from Mason NH to Tempe AZ"></div>
-  </div>
-  <p style="font-size:0.75rem; color: var(--mid-gray); margin-top: 1rem;">
-    Route: I-93 S → I-90 W → I-84 W → I-81 S → I-76 W → I-79 S → I-64 W → I-65 S → I-40 W → I-25 S → I-10 W → AZ-202 E
-  </p>
-</section>
-
-<!-- ─── TIMELINE ─── -->
-<section class="timeline-section">
-  <div class="section-header reveal">
-    <h2 class="section-title">Pre-Move<br/><em>Timeline</em></h2>
-  </div>
-  <div class="timeline-grid" id="timelineGrid">
-    <!-- Filled by JS -->
+<!-- BUDGET -->
+<section class="section section-alt" id="budget">
+  <p class="section-eyebrow">$3,000–5,000 Target</p>
+  <h2 class="section-title reveal">Move<br/><em>Budget</em></h2>
+  <div class="budget-grid" id="budgetGrid"></div>
+  <div class="budget-total-bar reveal">
+    <div>
+      <div class="budget-total-label">Estimated Total</div>
+      <div class="budget-total-range">Based on mid-range estimates</div>
+    </div>
+    <div class="budget-total-amount">~$3,800</div>
   </div>
 </section>
 
-<!-- ─── LOGISTICS ─── -->
-<section class="logistics-section">
-  <p class="section-label">Logistics</p>
-  <h2 class="section-title reveal">The Details</h2>
-  <div class="logistics-grid" id="logisticsGrid">
-    <!-- Filled by JS -->
-  </div>
-</section>
-
-<!-- ─── PLAN B ─── -->
-<section class="planb-section">
-  <p class="section-label">Alternative Plan</p>
-  <h2 class="section-title reveal">Plan B:<br/><em>April 3rd</em></h2>
-  <div class="planb-banner reveal">
-    <p class="planb-eyebrow">Later Move-In Option</p>
-    <p class="planb-title">Depart March 29 — Arrive April 3</p>
-    <p style="font-size:0.875rem; color: var(--mid-gray); line-height:1.7;">
-      This option gives you an extra 8 days of breathing room before departure — more time to pack, sell furniture, say proper goodbyes, and arrive refreshed rather than rushed. Same route, same hotels, same 5 driving days. Your April 1 move-in becomes an April 3 arrival with a buffer day built in.
-    </p>
-    <table class="planb-table">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Leg</th>
-          <th>Overnight</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Sat, Mar 29</td><td>Mason, NH → Pittsburgh, PA</td><td>Courtyard Pittsburgh Downtown</td></tr>
-        <tr><td>Sun, Mar 30</td><td>Pittsburgh, PA → Louisville, KY</td><td>Louisville Marriott Downtown</td></tr>
-        <tr><td>Mon, Mar 31</td><td>Louisville, KY → Memphis, TN</td><td>Courtyard Memphis Downtown</td></tr>
-        <tr><td>Tue, Apr 1</td><td>Memphis, TN → Amarillo, TX</td><td>SpringHill Suites Amarillo</td></tr>
-        <tr><td>Wed, Apr 2</td><td>Amarillo, TX → Tempe, AZ</td><td><strong style="color:var(--sage)">Your New Apartment</strong></td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- ─── FOOTER ─── -->
+<!-- FOOTER -->
 <footer class="footer">
-  <div class="footer-brand">Mason → Tempe 2025</div>
-  <p class="footer-note">Built for Jay Kolbenson · Shared move plan</p>
+  <div class="footer-brand">Mason ➔ Tempe 2025</div>
+  <p class="footer-note">Jay Kolbenson's move command center</p>
 </footer>
 
 <script>
-// ─── DATA ───
-const milestones = [
-  { date: 'Feb 22-25', title: 'Apartment Hunting', status: 'done' },
-  { date: 'Feb 24', title: 'Book Hotels & Trailer', status: 'active' },
-  { date: 'Mar 3', title: 'Begin Packing', status: 'upcoming' },
-  { date: 'Mar 10', title: 'Mid-Pack Push', status: 'upcoming' },
-  { date: 'Mar 14', title: 'Purge Day', status: 'upcoming' },
-  { date: 'Mar 17', title: 'Final Week Prep', status: 'upcoming' },
-  { date: 'Mar 20', title: 'Pick Up Trailer', status: 'upcoming' },
-  { date: 'Mar 21', title: 'Departure Day!', status: 'upcoming' },
-  { date: 'Mar 25', title: 'Arrive in Tempe', status: 'upcoming' },
-];
+// ─── DATA ───────────────────────────────────────────────────────────────────
 
-const legs = [
-  {
-    day: 1,
-    date: 'Friday, March 21',
-    from: 'Mason, NH',
-    to: 'Pittsburgh, PA',
-    miles: '~570',
-    hours: '~8.5',
-    depart: '7:00 AM',
-    hotel: 'Courtyard by Marriott Pittsburgh Downtown',
-    hotelRating: '4.4 ★',
-    hotelPhone: '(412) 434-5551',
-    hotelAddr: '945 Penn Ave, Pittsburgh, PA 15222',
-    hotelUrl: 'https://www.marriott.com/en-us/hotels/pitcy-courtyard-pittsburgh-downtown/overview/',
-    highway: 'I-93 S → I-90 W (Mass Pike) → I-84 W → I-81 S → I-76 W (PA Turnpike)',
-    tip: 'Your longest day alongside Day 4. Set your alarm for 6:00 AM. Refuel in Binghamton, NY around the halfway point. Call ahead to confirm they can accommodate trailer parking.',
-  },
-  {
-    day: 2,
-    date: 'Saturday, March 22',
-    from: 'Pittsburgh, PA',
-    to: 'Louisville, KY',
-    miles: '~390',
-    hours: '~6',
-    depart: '8:00 AM',
-    hotel: 'Louisville Marriott Downtown',
-    hotelRating: '4.4 ★',
-    hotelPhone: '(502) 627-5045',
-    hotelAddr: '280 W Jefferson St, Louisville, KY 40202',
-    hotelUrl: 'https://www.marriott.com/en-us/hotels/sdflm-louisville-marriott-downtown/overview/',
-    highway: 'I-79 S → I-68 W → I-79 S → I-64 W',
-    tip: 'Your easiest day mileage-wise. Arrive early afternoon. The Louisville Marriott is the standout hotel of the trip — legendary bourbon bar and elite lounge. Walk the Ohio River waterfront.',
-  },
-  {
-    day: 3,
-    date: 'Sunday, March 23',
-    from: 'Louisville, KY',
-    to: 'Memphis, TN',
-    miles: '~390',
-    hours: '~6',
-    depart: '8:00 AM',
-    hotel: 'Courtyard by Marriott Memphis Downtown',
-    hotelRating: '4.2 ★',
-    hotelPhone: '(901) 522-2200',
-    hotelAddr: '75 Jefferson Ave, Memphis, TN 38103',
-    hotelUrl: 'https://www.marriott.com/en-us/hotels/memcd-courtyard-memphis-downtown/overview/',
-    highway: 'I-65 S → I-40 W',
-    tip: 'Another light day. The Courtyard Memphis Downtown is a 5-10 minute walk from Beale Street. This is your fun night — live blues, world-class BBQ, cold beer. You\'ve earned it.',
-  },
-  {
-    day: 4,
-    date: 'Monday, March 24',
-    from: 'Memphis, TN',
-    to: 'Amarillo, TX',
-    miles: '~570',
-    hours: '~8',
-    depart: '7:00 AM',
-    hotel: 'SpringHill Suites by Marriott Amarillo',
-    hotelRating: '4.4 ★',
-    hotelPhone: '(806) 381-3400',
-    hotelAddr: '2301 Cinema Dr, Amarillo, TX 79124',
-    hotelUrl: 'https://www.marriott.com/en-us/hotels/amash-springhill-suites-amarillo/overview/',
-    highway: 'I-40 W all the way (through AR and into TX)',
-    tip: 'Big push day. I-40 W is yours from start to finish. Stop for fuel in Little Rock (~2 hrs). The landscape opens dramatically once you cross into Oklahoma. Spacious suite and free breakfast at SpringHill Amarillo.',
-  },
-  {
-    day: 5,
-    date: 'Tuesday, March 25',
-    from: 'Amarillo, TX',
-    to: 'Tempe, AZ',
-    miles: '~430',
-    hours: '~6',
-    depart: '8:00 AM',
-    hotel: 'Your New Apartment',
-    hotelRating: 'Home 🌵',
-    hotelPhone: '',
-    hotelAddr: 'Tempe, AZ',
-    hotelUrl: '',
-    highway: 'I-40 W → I-25 S (Albuquerque) → I-10 W → AZ-202 E',
-    tip: 'The final stretch. Stop in Albuquerque for lunch (~3 hrs). Drop the trailer at U-Haul Apache Station, 2340 E Apache Blvd, Tempe (4.1 stars). Then: keys to your new place. Welcome to Arizona.',
-  },
+const todos = [
+  { title: 'Book U-Haul Trailer', urgency: 'Do this week — peak season', desc: 'Reserve a 6x12 one-way trailer at <a href="https://www.uhaul.com" target="_blank">uhaul.com</a>. Pick up Milford, NH. Drop off Apache Station, 2340 E Apache Blvd, Tempe. Can upgrade size later if needed.', done: false },
+  { title: 'Book Hotel: Pittsburgh', urgency: 'Do this week', desc: 'Courtyard by Marriott Pittsburgh Downtown · 945 Penn Ave · (412) 434-5551 · Book via <a href="https://www.marriott.com" target="_blank">Bonvoy app</a>. Confirm trailer parking.', done: false },
+  { title: 'Book Hotel: Louisville', urgency: 'Do this week', desc: 'Louisville Marriott Downtown · 280 W Jefferson St · (502) 627-5045 · Book via <a href="https://www.marriott.com" target="_blank">Bonvoy app</a>. Confirm trailer parking.', done: false },
+  { title: 'Book Hotel: Memphis', urgency: 'Do this week', desc: 'Courtyard by Marriott Memphis Downtown · 75 Jefferson Ave · (901) 522-2200 · Book via <a href="https://www.marriott.com" target="_blank">Bonvoy app</a>. Walk to Beale St.', done: false },
+  { title: 'Book Hotel: Amarillo', urgency: 'Do this week', desc: 'SpringHill Suites Amarillo · 2301 Cinema Dr · (806) 381-3400 · Book via <a href="https://www.marriott.com" target="_blank">Bonvoy app</a>. Free breakfast included.', done: false },
+  { title: 'Schedule Jeep Service', urgency: 'Before Mar 3', desc: 'Oil change, tire rotation, tow hitch inspection, transmission fluid check. Wrangler Class III hitch rated 3,500 lbs. Loaded 6x12 trailer runs ~1,800–2,200 lbs.', done: false },
+  { title: 'Set Up APS Electric', urgency: 'By Mar 15', desc: 'Arizona Public Service — set up electric account for your Tempe apartment starting March 24. Visit <a href="https://www.aps.com" target="_blank">aps.com</a>.', done: false },
+  { title: 'Set Up Internet in Tempe', urgency: 'By Mar 15', desc: 'Cox or CenturyLink are the main providers in Tempe. Schedule install for first week of occupancy. Book early — install slots fill up.', done: false },
+  { title: 'USPS Mail Forward', urgency: 'By Mar 10', desc: 'Set up mail forwarding starting March 24 at <a href="https://moversguide.usps.com" target="_blank">moversguide.usps.com</a>. Takes a few days to process.', done: false },
+  { title: 'AZ Vehicle Registration', urgency: 'Within 15 days of arrival', desc: 'Required within 15 days of establishing AZ residency. Visit <a href="https://servicearizona.com" target="_blank">servicearizona.com</a>. Also update driver\'s license within 30 days at an MVD office.', done: false },
+  { title: 'Order Packing Supplies', urgency: 'This week', desc: 'Target 60+ boxes for a 4BR house. Order wardrobe boxes for hanging clothes — worth every penny. Bubble wrap for tech and fragile items. Mattress bag for transport.', done: false },
 ];
 
 const timeline = [
   {
-    week: 'This Weekend',
-    range: 'Feb 22-25',
-    phase: 'Apartment Hunting',
+    week: 'This Week', range: 'Feb 24 – Mar 1', phase: 'Book Everything',
     tasks: [
-      'Tour apartments in Tempe (Sat-Tue)',
-      'Put money down if you find the one',
-      'Photograph every room and take measurements',
-      'Confirm move-in date and trailer parking access',
-      'Ask about elevator and loading dock',
-    ],
-  },
-  {
-    week: 'Week of Feb 24',
-    range: 'Feb 24 — Mar 1',
-    phase: 'Book Everything',
-    tasks: [
+      'Book U-Haul 6x12 trailer at uhaul.com — Milford, NH pickup March 20',
       'Book all 4 Marriott hotels through Bonvoy app',
-      'Book U-Haul 6x12 one-way trailer at uhaul.com',
-      'Order 60-80 boxes, tape, bubble wrap, wardrobe boxes',
-      'Schedule Jeep service (oil change, tires, hitch inspection)',
-      'Set up USPS mail forward starting March 25',
+      'Order 60+ boxes, wardrobe boxes, bubble wrap, mattress bag',
+      'Schedule Jeep service for week of Mar 3',
       'Notify bank of upcoming address change',
-    ],
+    ]
   },
   {
-    week: 'Week of Mar 3',
-    range: 'Mar 3-7',
-    phase: 'Begin Packing',
+    week: 'Week of Mar 3', range: 'Mar 3–7', phase: 'Begin Packing — Your Rooms',
     tasks: [
-      'Pack non-essentials: books, decor, artwork, off-season clothes',
-      'Pack storage areas, closets, and guest room',
-      'Label every box: contents + destination room in Tempe',
-      'Set up Arizona utilities: APS (electric), Southwest Gas, internet',
-      'Research Arizona car registration (required within 15 days of residency)',
-    ],
-  },
-  {
-    week: 'Week of Mar 10',
-    range: 'Mar 10-14',
-    phase: 'Mid-Pack Push',
-    tasks: [
-      'Pack kitchen down to 1-week survival kit',
+      'Pack your bedroom completely: clothes, personal items, linens',
+      'Pack your office: PC, monitors, cables, peripherals, books, decor',
+      'Stage all packed boxes in the garage — out of shared living space',
+      'Set up APS electric and internet for Tempe apartment',
       'Get Jeep serviced',
-      'Confirm all 4 hotel reservations',
-      'Begin selling furniture you won\'t move on Facebook Marketplace',
-      'Cancel NH gym, subscriptions, and local memberships',
-    ],
+    ]
   },
   {
-    week: 'Mar 14-15',
-    range: 'Sat-Sun',
-    phase: 'Purge Day',
+    week: 'Blackout', range: 'Mar 8–12', phase: 'Work Travel — No Packing',
     tasks: [
-      'Final decision on everything: haul it, sell it, donate it, or trash it',
-      'Schedule donation pickup or Goodwill run',
+      'Confirm all 4 hotel reservations remotely',
+      'Respond to any Facebook Marketplace inquiries from phone',
+      'Set up USPS mail forward if not done yet',
+    ],
+    blackout: true
+  },
+  {
+    week: 'Week of Mar 13', range: 'Mar 13–16', phase: 'Second Wave + Furniture Decision',
+    tasks: [
+      'Have the furniture conversation — one walk-through, decisions made, written down',
+      'Pack kitchen down to 1-week survival kit',
+      'Pack shed: tools and items you\'re taking',
+      'Begin Facebook Marketplace listings for items you\'re leaving',
+      'Cancel NH gym, subscriptions, local memberships',
+    ]
+  },
+  {
+    week: 'Purge Weekend', range: 'Mar 14–16', phase: 'Final Decisions on Everything',
+    tasks: [
+      'Every remaining item gets a decision: haul, sell, donate, or trash',
+      'Schedule Goodwill pickup or make donation run',
       'Eat down the freezer aggressively this week',
-    ],
+    ]
   },
   {
-    week: 'Week of Mar 17',
-    range: 'Mar 17-20',
-    phase: 'Final Week',
+    week: 'Final Week', range: 'Mar 17–19', phase: 'Load & Launch Prep',
     tasks: [
-      'Pack everything except daily essentials (4-night kit)',
-      'Do landlord walkthrough, document apartment condition with photos',
+      'Pack everything except daily essentials (5-night kit)',
+      'Landlord walkthrough — photograph every room',
       'Arrange key return with landlord',
-      'Confirm trailer pickup appointment',
-      'Print all hotel confirmations and new lease documents',
-    ],
-  },
-  {
-    week: 'Thu, Mar 20',
-    range: 'Night Before',
-    phase: 'Load & Launch',
-    tasks: [
       'Pick up U-Haul trailer from Milford, NH',
-      'Load trailer completely (heaviest items forward/low, near hitch)',
-      'Pack road trip bag: docs, meds, charger, snacks, clothes per day',
+      'Load trailer: heaviest items forward near hitch, boxes toward rear',
+      'Pack road trip bag: docs, meds, chargers, snacks, 5 days clothes',
       'Full gas tank on the Jeep',
       'Set alarm for 6:00 AM',
-    ],
+    ]
+  },
+  {
+    week: 'Departure', range: 'Thursday, Mar 20', phase: 'Wheels Rolling by 7:00 AM',
+    tasks: [
+      'Final house walkthrough',
+      'Keys handed off to landlord',
+      'Confirm Pittsburgh hotel has trailer parking',
+      'Drive: Mason NH → Pittsburgh PA (Day 1)',
+    ]
   },
 ];
 
-const logisticsCards = [
+const rooms = [
   {
-    icon: '🚛',
-    title: 'Trailer: U-Haul 6×12',
-    body: `<strong>Pick up:</strong> Milford, NH (776 Elm St) — book as soon as lease is signed. End of March is peak moving season.<br/><br/><strong>Drop off:</strong> <a href="https://www.uhaul.com" target="_blank">U-Haul Apache Station</a>, 2340 E Apache Blvd, Tempe, AZ (4.1 stars). Open 7 AM-7 PM daily.<br/><br/><strong>Estimated cost:</strong> $500-700 one-way. Book at uhaul.com.`,
+    name: 'Office / Tech',
+    icon: '💻',
+    items: [
+      'PC tower', 'Monitor 1', 'Monitor 2', 'Keyboard & mouse', 'Webcam',
+      'All cables and power strips', 'Headphones', 'Microphone / audio gear',
+      'External hard drives', 'USB hubs', 'Desk lamp', 'Books',
+      'Office chair', 'Desk (decide)', 'Printer', 'All chargers',
+      'Raspberry Pi arcade setup', 'Arcade controller', 'HDMI cables',
+      'Papers and files', 'Whiteboard / supplies',
+    ]
   },
   {
-    icon: '🚙',
-    title: 'Jeep Tow Checklist',
-    body: `Before departure: oil change, tire rotation, tow hitch inspection, check transmission fluid.<br/><br/>Wrangler Class III hitch is rated 3,500 lbs — a loaded 6x12 U-Haul runs ~1,800-2,200 lbs typically, so you're within range.<br/><br/>Verify your specific Wrangler trim's tow rating before booking the trailer.`,
+    name: 'Master Bedroom',
+    icon: '🛏',
+    items: [
+      'Bed frame (disassemble)', 'Mattress', 'Mattress bag', 'Box spring',
+      'All clothes — everyday', 'All clothes — seasonal', 'Shoes',
+      'Suits / dress clothes in wardrobe boxes', 'Belts / accessories',
+      'Nightstands (decide)', 'Dresser (decide)', 'Bedding and pillows',
+      'Personal items / toiletries', 'Medicine cabinet items',
+      'Alarm clock', 'Safe / valuables', 'Artwork / decor (yours)',
+    ]
   },
   {
-    icon: '🏨',
-    title: 'Hotel Booking',
-    body: `All 4 hotels are Marriott Bonvoy eligible. Book directly through the <strong>Marriott app</strong> for Bonvoy points and best rate guarantee.<br/><br/>Call each property to confirm <strong>trailer-friendly parking</strong> — especially Pittsburgh and Louisville where downtown parking can be tight.<br/><br/>Earliest check-in if arriving before 3 PM: call ahead and request early check-in as a Bonvoy member.`,
+    name: 'Kitchen',
+    icon: '🍳',
+    items: [
+      'Good knife set', 'Knife block', 'Coffee maker', 'Coffee grinder',
+      'Cast iron pan', 'Favorite pots (1-2)', 'Cutting board',
+      'Vitamix / blender (if yours)', 'Instant Pot (if yours)',
+      'Plates (4 — buy new rest in Tempe)', 'Bowls (4)', 'Mugs (4)',
+      'Silverware set', 'Can opener', 'Measuring cups/spoons',
+      'Dish towels', 'Pantry items — non-perishable',
+    ]
   },
   {
-    icon: '🌵',
-    title: 'Arizona Setup',
-    body: `<strong>Utilities to activate for March 25:</strong><br/>APS (electric) · Southwest Gas · Your internet provider of choice.<br/><br/><strong>Vehicle registration:</strong> Required within 15 days of establishing AZ residency. Visit servicearizona.com.<br/><br/><strong>Driver's license:</strong> Update to AZ license within 30 days at an MVD office.`,
-  },
-  {
-    icon: '📦',
-    title: 'Packing Strategy',
-    body: `For a 2-bedroom, target 60-80 boxes total. Order wardrobe boxes for hanging clothes — worth every penny.<br/><br/><strong>Loading order:</strong> Heaviest and largest first (furniture, appliances), closest to the hitch wall. Lighter boxes toward the rear and on top.<br/><br/>Label every box with <strong>contents + destination room</strong>. Solo unloading is much easier when you know exactly where everything goes.`,
-  },
-  {
-    icon: '📍',
-    title: 'Fuel Stops',
-    body: `<strong>Day 1:</strong> Binghamton, NY (~halfway)<br/><strong>Day 4:</strong> Little Rock, AR (~2 hrs from Memphis)<br/><strong>Day 5:</strong> Albuquerque, NM (lunch + fuel, ~3 hrs from Amarillo)<br/><br/>With a trailer, fuel economy drops to roughly 14-16 MPG. Budget ~$400-500 in fuel for the full trip based on current AZ/TX/TN gas prices.`,
+    name: 'Shed',
+    icon: '🔧',
+    items: [
+      'Tool box and hand tools', 'Power drill', 'Level',
+      'Extension cords', 'Work gloves', 'Step ladder (if small)',
+      'Bike (if keeping)', 'Outdoor gear (yours)',
+      'Moving blankets', 'Tie-down straps',
+    ]
   },
 ];
 
-// ─── RENDER MILESTONES ───
-const milestoneGrid = document.getElementById('milestoneGrid');
-milestones.forEach(m => {
+const decisions = {
+  bring: [
+    'Bed and bed frame', 'Full office setup + all tech', 'Arcade machine',
+    'All clothing', 'Good knife set', 'Coffee maker', 'Cast iron pan',
+    'Personal artwork / decor', 'Books', 'Jeep',
+    'Important documents', 'Medications', 'Tools from shed',
+    'Outdoor gear (yours)', 'Mattress + bag',
+  ],
+  leave: [
+    'Shared couch / seating', 'Kitchen table (likely)', 'Most kitchen appliances',
+    'Shared TV / entertainment stand', 'Guest bedroom furniture',
+    'Lawn and garden tools', 'NH winter gear (some)',
+    'Shared artwork / decor', 'Extra dishes and cookware',
+    'Cleaning supplies — use up or leave',
+  ],
+  buy: [
+    'Basic dishes and bowls (IKEA Tempe)', 'Pots and pans (fill gaps)',
+    'Couch / seating if needed', 'TV if needed',
+    'Cleaning supplies — fresh start', 'Bathroom basics',
+    'Laundry hamper, hangers', 'Trash cans',
+    'Basic pantry restocking', 'Shower curtain, bath mat',
+    'Kitchen table if not taking one',
+  ]
+};
+
+const furniture = [
+  { name: 'Couch / Sectional', note: 'Shared purchase', status: 'waiting' },
+  { name: 'Kitchen Table', note: 'Shared', status: 'waiting' },
+  { name: 'Kitchen Chairs (4)', note: 'Shared', status: 'waiting' },
+  { name: 'TV and Stand', note: 'Shared', status: 'waiting' },
+  { name: 'Extra Dresser', note: 'Guest room', status: 'waiting' },
+  { name: 'Guest Bed Frame', note: 'Guest room', status: 'waiting' },
+  { name: 'Desk', note: 'Office — may take', status: 'waiting' },
+  { name: 'Bookshelf(ves)', note: 'Office / living room', status: 'waiting' },
+  { name: 'Bed Frame (yours)', note: 'Master bedroom', status: 'bring' },
+  { name: 'Office Chair', note: 'Office', status: 'bring' },
+  { name: 'Arcade Cabinet', note: 'Yours', status: 'bring' },
+];
+
+const legs = [
+  { day: 1, date: 'Thursday, March 20', from: 'Mason, NH', to: 'Pittsburgh, PA', miles: '~570', hours: '~8.5', depart: '7:00 AM', hotel: 'Courtyard Pittsburgh Downtown', rating: '4.4 ★', phone: '(412) 434-5551', addr: '945 Penn Ave, Pittsburgh, PA 15222', url: 'https://www.marriott.com/en-us/hotels/pitcy-courtyard-pittsburgh-downtown/overview/', highway: 'I-93 S → I-90 W → I-84 W → I-81 S → I-76 W (PA Turnpike)', tip: 'Your longest day. Set alarm for 6:00 AM. Refuel in Binghamton, NY at the halfway point. Call ahead to confirm trailer parking.' },
+  { day: 2, date: 'Friday, March 21', from: 'Pittsburgh, PA', to: 'Louisville, KY', miles: '~390', hours: '~6', depart: '8:00 AM', hotel: 'Louisville Marriott Downtown', rating: '4.4 ★', phone: '(502) 627-5045', addr: '280 W Jefferson St, Louisville, KY 40202', url: 'https://www.marriott.com/en-us/hotels/sdflm-louisville-marriott-downtown/overview/', highway: 'I-79 S → I-68 W → I-79 S → I-64 W', tip: 'Your easiest day mileage-wise. Arrive early afternoon. The Louisville Marriott is the standout hotel of the trip — legendary bourbon bar and elite lounge. Walk the Ohio River waterfront.' },
+  { day: 3, date: 'Saturday, March 22', from: 'Louisville, KY', to: 'Memphis, TN', miles: '~390', hours: '~6', depart: '8:00 AM', hotel: 'Courtyard Memphis Downtown', rating: '4.2 ★', phone: '(901) 522-2200', addr: '75 Jefferson Ave, Memphis, TN 38103', url: 'https://www.marriott.com/en-us/hotels/memcd-courtyard-memphis-downtown/overview/', highway: 'I-65 S → I-40 W', tip: 'Another light day. The Courtyard Memphis Downtown is a 5-10 minute walk from Beale Street. Live blues, world-class BBQ, cold beer. You\'ve earned it.' },
+  { day: 4, date: 'Sunday, March 23', from: 'Memphis, TN', to: 'Amarillo, TX', miles: '~570', hours: '~8', depart: '7:00 AM', hotel: 'SpringHill Suites Amarillo', rating: '4.4 ★', phone: '(806) 381-3400', addr: '2301 Cinema Dr, Amarillo, TX 79124', url: 'https://www.marriott.com/en-us/hotels/amash-springhill-suites-amarillo/overview/', highway: 'I-40 W all the way through AR and into TX', tip: 'Big push day. Stop for fuel in Little Rock (~2 hrs). The landscape opens dramatically once you cross into Oklahoma. Spacious suite and free breakfast at SpringHill Amarillo.' },
+  { day: 5, date: 'Monday, March 24', from: 'Amarillo, TX', to: 'Tempe, AZ', miles: '~430', hours: '~6', depart: '8:00 AM', hotel: 'Your New Apartment 🏜', rating: 'Home', phone: '', addr: 'Tempe, AZ', url: '', highway: 'I-40 W → I-25 S (Albuquerque) → I-10 W → AZ-202 E', tip: 'The final stretch. Stop in Albuquerque for lunch (~3 hrs). Drop trailer at U-Haul Apache Station, 2340 E Apache Blvd, Tempe (4.1 stars). Then: keys to your new place. Welcome to Arizona.' },
+];
+
+const budget = [
+  { category: 'U-Haul Trailer', low: 500, high: 700, note: '6x12 one-way, NH to AZ' },
+  { category: 'Hotels (4 nights)', low: 700, high: 1000, note: 'Marriott Bonvoy properties' },
+  { category: 'Fuel', low: 400, high: 500, note: '~14-16 MPG with trailer' },
+  { category: 'Food & Meals on Road', low: 150, high: 250, note: '5 days, mix of fast and sit-down' },
+  { category: 'Packing Supplies', low: 150, high: 250, note: '60+ boxes, wrap, wardrobe boxes' },
+  { category: 'Jeep Service', low: 150, high: 300, note: 'Oil, tires, hitch inspection' },
+  { category: 'Move-In Supplies (Tempe)', low: 300, high: 600, note: 'IKEA basics, cleaning, bathroom' },
+  { category: 'Buffer / Unexpected', low: 300, high: 400, note: 'Always have a cushion' },
+];
+
+// ─── RENDER: TODOS ──────────────────────────────────────────────────────────
+const todosGrid = document.getElementById('todosGrid');
+todos.forEach((t, i) => {
   const div = document.createElement('div');
-  div.className = `progress-milestone ${m.status}`;
-  const badgeClass = { done: 'badge-done', active: 'badge-active', upcoming: 'badge-upcoming' }[m.status];
-  const badgeText = { done: 'Done', active: 'Up Next', upcoming: 'Upcoming' }[m.status];
+  div.className = `todo-card${t.done ? ' done' : ''}`;
   div.innerHTML = `
-    <div class="milestone-date">${m.date}</div>
-    <div class="milestone-title">${m.title}</div>
-    <div class="milestone-badge ${badgeClass}">${badgeText}</div>
+    <div class="todo-check"></div>
+    <div class="todo-urgency">${t.urgency}</div>
+    <div class="todo-title">${t.title}</div>
+    <div class="todo-desc">${t.desc}</div>
   `;
-  milestoneGrid.appendChild(div);
+  div.addEventListener('click', () => {
+    div.classList.toggle('done');
+    saveTodos();
+  });
+  todosGrid.appendChild(div);
 });
 
-// ─── RENDER ROUTE LEGS ───
+function saveTodos() {
+  const states = [...document.querySelectorAll('.todo-card')].map(el => el.classList.contains('done'));
+  try { localStorage.setItem('todos', JSON.stringify(states)); } catch(e) {}
+}
+
+function loadTodos() {
+  try {
+    const states = JSON.parse(localStorage.getItem('todos') || '[]');
+    const cards = document.querySelectorAll('.todo-card');
+    states.forEach((done, i) => { if (done && cards[i]) cards[i].classList.add('done'); });
+  } catch(e) {}
+}
+
+// ─── RENDER: TIMELINE ──────────────────────────────────────────────────────
+const timelineGrid = document.getElementById('timelineGrid');
+timeline.forEach((week, wi) => {
+  const row = document.createElement('div');
+  row.className = `timeline-row${week.blackout ? ' blackout' : ''} reveal`;
+
+  const tasksHtml = week.tasks.map((t, ti) => `
+    <li data-wi="${wi}" data-ti="${ti}" onclick="toggleTask(this)">
+      <span class="task-check"></span>
+      <span>${t}</span>
+    </li>
+  `).join('');
+
+  row.innerHTML = `
+    <div class="timeline-date">
+      <div class="timeline-week">${week.week}</div>
+      <div class="timeline-range">${week.range}</div>
+    </div>
+    <div class="timeline-content">
+      <div class="timeline-phase">${week.phase}</div>
+      <ul class="timeline-tasks">${tasksHtml}</ul>
+    </div>
+  `;
+  timelineGrid.appendChild(row);
+});
+
+function toggleTask(li) {
+  li.classList.toggle('checked');
+  const check = li.querySelector('.task-check');
+  check.classList.toggle('checked');
+  saveTasks();
+}
+
+function saveTasks() {
+  const states = [...document.querySelectorAll('.timeline-tasks li')].map(el => el.classList.contains('checked'));
+  try { localStorage.setItem('tasks', JSON.stringify(states)); } catch(e) {}
+}
+
+function loadTasks() {
+  try {
+    const states = JSON.parse(localStorage.getItem('tasks') || '[]');
+    const items = document.querySelectorAll('.timeline-tasks li');
+    states.forEach((checked, i) => {
+      if (checked && items[i]) {
+        items[i].classList.add('checked');
+        items[i].querySelector('.task-check').classList.add('checked');
+      }
+    });
+  } catch(e) {}
+}
+
+// ─── RENDER: PACKING ROOMS ─────────────────────────────────────────────────
+const roomTabs = document.getElementById('roomTabs');
+const roomPanels = document.getElementById('roomPanels');
+
+rooms.forEach((room, ri) => {
+  const btn = document.createElement('button');
+  btn.className = `room-tab${ri === 0 ? ' active' : ''}`;
+  btn.textContent = `${room.icon} ${room.name}`;
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.room-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.room-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(`panel-${ri}`).classList.add('active');
+  });
+  roomTabs.appendChild(btn);
+
+  const panel = document.createElement('div');
+  panel.className = `room-panel${ri === 0 ? ' active' : ''}`;
+  panel.id = `panel-${ri}`;
+
+  const itemsHtml = room.items.map((item, ii) => `
+    <div class="pack-item" data-ri="${ri}" data-ii="${ii}" onclick="togglePack(this)">
+      <span class="item-check"></span>
+      ${item}
+    </div>
+  `).join('');
+
+  panel.innerHTML = `
+    <div class="room-panel-header">
+      <div class="room-panel-title">${room.icon} ${room.name}</div>
+      <div class="room-progress">
+        <span class="room-progress-num" id="progress-${ri}">0</span>
+        of ${room.items.length} packed
+      </div>
+    </div>
+    <div class="pack-items">${itemsHtml}</div>
+  `;
+  roomPanels.appendChild(panel);
+});
+
+function togglePack(el) {
+  el.classList.toggle('packed');
+  el.querySelector('.item-check').classList.toggle('checked');
+  updateRoomProgress();
+  savePacking();
+}
+
+function updateRoomProgress() {
+  rooms.forEach((_, ri) => {
+    const panel = document.getElementById(`panel-${ri}`);
+    if (!panel) return;
+    const total = panel.querySelectorAll('.pack-item').length;
+    const done = panel.querySelectorAll('.pack-item.packed').length;
+    const el = document.getElementById(`progress-${ri}`);
+    if (el) el.textContent = done;
+  });
+}
+
+function savePacking() {
+  const states = [...document.querySelectorAll('.pack-item')].map(el => el.classList.contains('packed'));
+  try { localStorage.setItem('packing', JSON.stringify(states)); } catch(e) {}
+}
+
+function loadPacking() {
+  try {
+    const states = JSON.parse(localStorage.getItem('packing') || '[]');
+    const items = document.querySelectorAll('.pack-item');
+    states.forEach((packed, i) => {
+      if (packed && items[i]) {
+        items[i].classList.add('packed');
+        items[i].querySelector('.item-check').classList.add('checked');
+      }
+    });
+    updateRoomProgress();
+  } catch(e) {}
+}
+
+// ─── RENDER: DECISIONS ─────────────────────────────────────────────────────
+const decisionGrid = document.getElementById('decisionGrid');
+['bring', 'leave', 'buy'].forEach(type => {
+  const col = document.createElement('div');
+  col.className = `decision-col ${type}`;
+  const label = { bring: '✓ Bring to Tempe', leave: '✗ Leave Behind', buy: '+ Buy New in Tempe' }[type];
+  col.innerHTML = `
+    <div class="decision-col-header">${label}</div>
+    <div class="decision-items">
+      ${decisions[type].map(item => `<div class="decision-item">${item}</div>`).join('')}
+    </div>
+  `;
+  decisionGrid.appendChild(col);
+});
+
+// ─── RENDER: FURNITURE ─────────────────────────────────────────────────────
+const furnitureGrid = document.getElementById('furnitureGrid');
+const statusCycle = ['waiting', 'bring', 'leave', 'sell'];
+const statusLabel = { waiting: 'Waiting', bring: 'Bringing', leave: 'Leaving', sell: 'Selling' };
+
+const headerRow = document.createElement('div');
+headerRow.className = 'furniture-row header';
+headerRow.innerHTML = `
+  <div class="furniture-cell">Item</div>
+  <div class="furniture-cell">Status</div>
+  <div class="furniture-cell">Notes</div>
+`;
+furnitureGrid.appendChild(headerRow);
+
+furniture.forEach((item, fi) => {
+  const row = document.createElement('div');
+  row.className = 'furniture-row';
+  row.dataset.status = item.status;
+  row.dataset.fi = fi;
+
+  function renderRow() {
+    const s = row.dataset.status;
+    row.innerHTML = `
+      <div class="furniture-cell"><span class="furniture-name">${item.name}</span></div>
+      <div class="furniture-cell"><span class="furniture-status status-${s}">${statusLabel[s]}</span></div>
+      <div class="furniture-cell" style="font-size:0.8rem; color:var(--mid-gray);">${item.note}</div>
+    `;
+  }
+
+  renderRow();
+
+  row.addEventListener('click', () => {
+    const current = row.dataset.status;
+    const next = statusCycle[(statusCycle.indexOf(current) + 1) % statusCycle.length];
+    row.dataset.status = next;
+    renderRow();
+    saveFurniture();
+  });
+
+  furnitureGrid.appendChild(row);
+});
+
+function saveFurniture() {
+  const states = [...document.querySelectorAll('.furniture-row:not(.header)')].map(el => el.dataset.status);
+  try { localStorage.setItem('furniture', JSON.stringify(states)); } catch(e) {}
+}
+
+function loadFurniture() {
+  try {
+    const states = JSON.parse(localStorage.getItem('furniture') || '[]');
+    const rows = document.querySelectorAll('.furniture-row:not(.header)');
+    states.forEach((status, i) => {
+      if (rows[i] && statusCycle.includes(status)) {
+        rows[i].dataset.status = status;
+        rows[i].click(); rows[i].click(); // trigger re-render
+      }
+    });
+  } catch(e) {}
+}
+
+// ─── RENDER: ROUTE ─────────────────────────────────────────────────────────
 const routeLegs = document.getElementById('routeLegs');
-legs.forEach((leg, i) => {
+legs.forEach(leg => {
   const div = document.createElement('div');
   div.className = 'route-leg reveal';
-  const hotelLink = leg.hotelUrl
-    ? `<a href="${leg.hotelUrl}" target="_blank">${leg.hotel}</a>`
+  const hotelLink = leg.url
+    ? `<a href="${leg.url}" target="_blank">${leg.hotel}</a>`
     : `<span style="color:var(--sage)">${leg.hotel}</span>`;
+
   div.innerHTML = `
     <div class="route-leg-day">
       <span class="day-number">${leg.day}</span>
@@ -1226,7 +1473,7 @@ legs.forEach((leg, i) => {
     <div class="route-leg-hotel">
       <div class="hotel-label">Overnight</div>
       <div class="hotel-name">${leg.hotel}</div>
-      <div class="hotel-stars">${leg.hotelRating}</div>
+      <div class="hotel-stars">${leg.rating}</div>
     </div>
     <div class="leg-details">
       <div class="leg-details-inner">
@@ -1239,7 +1486,7 @@ legs.forEach((leg, i) => {
         </div>
         <div class="leg-detail-block">
           <h4>Hotel Details</h4>
-          <p>${hotelLink}${leg.hotelAddr ? '<br/>' + leg.hotelAddr : ''}${leg.hotelPhone ? '<br/>' + leg.hotelPhone : ''}</p>
+          <p>${hotelLink}${leg.addr ? '<br/>' + leg.addr : ''}${leg.phone ? '<br/>' + leg.phone : ''}</p>
           <br/>
           <h4>Notes</h4>
           <p>${leg.tip}</p>
@@ -1247,160 +1494,37 @@ legs.forEach((leg, i) => {
       </div>
     </div>
   `;
-  div.addEventListener('click', () => {
-    div.classList.toggle('expanded');
-  });
+  div.addEventListener('click', () => div.classList.toggle('expanded'));
   routeLegs.appendChild(div);
 });
 
-// ─── RENDER TIMELINE ───
-const timelineGrid = document.getElementById('timelineGrid');
-timeline.forEach((week, i) => {
-  const dateCol = document.createElement('div');
-  dateCol.className = 'timeline-date-col reveal';
-  dateCol.innerHTML = `
-    <div class="timeline-date-week">${week.week}</div>
-    <div class="timeline-date-range">${week.range}</div>
+// ─── RENDER: BUDGET ────────────────────────────────────────────────────────
+const budgetGrid = document.getElementById('budgetGrid');
+budget.forEach(item => {
+  const card = document.createElement('div');
+  card.className = 'budget-card reveal';
+  const mid = Math.round((item.low + item.high) / 2 / 50) * 50;
+  card.innerHTML = `
+    <div class="budget-category">${item.category}</div>
+    <div class="budget-amount">$${item.low}–${item.high}</div>
+    <div class="budget-note">${item.note}</div>
   `;
-
-  const tasksCol = document.createElement('div');
-  tasksCol.className = 'timeline-tasks-col reveal';
-  const tasksHtml = week.tasks.map(t => `
-    <li onclick="this.querySelector('.task-check').classList.toggle('checked')">
-      <span class="task-check"></span>
-      <span>${t}</span>
-    </li>
-  `).join('');
-  tasksCol.innerHTML = `
-    <div class="timeline-phase">${week.phase}</div>
-    <ul class="timeline-tasks">${tasksHtml}</ul>
-  `;
-
-  timelineGrid.appendChild(dateCol);
-  timelineGrid.appendChild(tasksCol);
+  budgetGrid.appendChild(card);
 });
 
-// ─── RENDER LOGISTICS ───
-const logisticsGrid = document.getElementById('logisticsGrid');
-logisticsCards.forEach(card => {
-  const div = document.createElement('div');
-  div.className = 'logistics-card reveal';
-  div.innerHTML = `
-    <span class="logistics-icon">${card.icon}</span>
-    <h3>${card.title}</h3>
-    <p>${card.body}</p>
-  `;
-  logisticsGrid.appendChild(div);
-});
-
-// ─── INTERSECTION OBSERVER ───
-const observer = new IntersectionObserver((entries) => {
+// ─── INTERSECTION OBSERVER ─────────────────────────────────────────────────
+const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
+    if (entry.isIntersecting) entry.target.classList.add('visible');
   });
-}, { threshold: 0.1 });
+}, { threshold: 0.08 });
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// ─── INTERACTIVE MAP (GOOGLE MAPS + DIRECTIONS) ───
-const routeStops = [
-  { city: 'Mason, NH', coords: [42.7437, -71.5901], day: 1 },
-  { city: 'Pittsburgh, PA', coords: [40.4406, -79.9959], day: 1 },
-  { city: 'Louisville, KY', coords: [38.2527, -85.7585], day: 2 },
-  { city: 'Memphis, TN', coords: [35.1495, -90.0490], day: 3 },
-  { city: 'Amarillo, TX', coords: [35.2220, -101.8313], day: 4 },
-  { city: 'Tempe, AZ', coords: [33.4255, -111.9400], day: 5 },
-];
-
-function renderMapError(message) {
-  const mapElement = document.getElementById('routeMap');
-  if (!mapElement) return;
-  mapElement.innerHTML = `<div class="map-error">${message}</div>`;
-}
-
-window.initRouteMap = function initRouteMap() {
-  const mapElement = document.getElementById('routeMap');
-  if (!mapElement || !window.google || !google.maps) return;
-
-  const toLatLng = (coords) => ({ lat: coords[0], lng: coords[1] });
-  const origin = toLatLng(routeStops[0].coords);
-  const destination = toLatLng(routeStops[routeStops.length - 1].coords);
-  const waypoints = routeStops.slice(1, -1).map(stop => ({
-    location: toLatLng(stop.coords),
-    stopover: true,
-  }));
-
-  const map = new google.maps.Map(mapElement, {
-    center: origin,
-    zoom: 5,
-    mapTypeControl: false,
-    streetViewControl: false,
-    fullscreenControl: true,
-  });
-
-  const directionsService = new google.maps.DirectionsService();
-  const directionsRenderer = new google.maps.DirectionsRenderer({
-    map,
-    suppressMarkers: true,
-    polylineOptions: {
-      strokeColor: '#C8502A',
-      strokeWeight: 5,
-      strokeOpacity: 0.95,
-    },
-  });
-
-  directionsService.route(
-    {
-      origin,
-      destination,
-      waypoints,
-      optimizeWaypoints: false,
-      travelMode: google.maps.TravelMode.DRIVING,
-      provideRouteAlternatives: false,
-    },
-    (result, status) => {
-      if (status !== 'OK' || !result) {
-        renderMapError(`Map route failed to load (${status}). Check Google Maps API key and referrer restrictions.`);
-        return;
-      }
-
-      directionsRenderer.setDirections(result);
-
-      routeStops.forEach((stop, index) => {
-        const label = index === 0 ? 'S' : (index === routeStops.length - 1 ? 'F' : `${index}`);
-        new google.maps.Marker({
-          position: toLatLng(stop.coords),
-          map,
-          title: stop.city,
-          label,
-          icon: {
-            path: google.maps.SymbolPath.CIRCLE,
-            fillColor: '#C8502A',
-            fillOpacity: 1,
-            strokeColor: '#FDFAF5',
-            strokeWeight: 2,
-            scale: 7,
-          },
-        });
-      });
-    }
-  );
-};
-
-window.addEventListener('error', (event) => {
-  const source = event?.target?.src || '';
-  if (source.includes('maps.googleapis.com/maps/api/js')) {
-    renderMapError('Google Maps failed to load. Verify internet access and your Maps JavaScript API key.');
-  }
-}, true);
-
-window.gm_authFailure = function gm_authFailure() {
-  renderMapError('Google Maps auth failed. Enable billing and confirm key restrictions include this site and both Maps JavaScript API + Directions API.');
-};
-
+// ─── LOAD SAVED STATE ──────────────────────────────────────────────────────
+loadTodos();
+loadTasks();
+loadPacking();
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&callback=initRouteMap"></script>
 </body>
 </html>
