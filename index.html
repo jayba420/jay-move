@@ -7,6 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -988,43 +990,8 @@
   <h2 class="section-title reveal">The<br/><em>Route</em></h2>
   <div class="route-legs" id="routeLegs"></div>
   <div class="map-container reveal" style="margin-top:2rem; height:420px; border-radius:3px; overflow:hidden; position:relative; background:#1a1614;">
-    <iframe
-      src="https://www.openstreetmap.org/export/embed.html?bbox=-116.0,29.0,-69.0,46.0&layer=mapnik&marker=42.8,-71.7"
-      style="width:100%;height:100%;border:none;filter:saturate(0.4) brightness(0.7);"
-      loading="lazy"
-      title="Move route map region">
-    </iframe>
-    <div style="position:absolute;inset:0;pointer-events:none;">
-      <svg viewBox="0 0 1000 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
-        <!-- Route line: Mason NH → Pittsburgh → Louisville → Memphis (lunch) → Little Rock → Amarillo → Scottsdale AZ -->
-        <polyline
-          points="870,82 720,155 650,195 590,240 555,248 330,268 100,295"
-          fill="none"
-          stroke="#C8502A"
-          stroke-width="2.5"
-          stroke-dasharray="6,4"
-          opacity="0.85"/>
-        <!-- City dots -->
-        <circle cx="870" cy="82" r="5" fill="#F5ECD7"/>
-        <circle cx="720" cy="155" r="4" fill="#C8502A"/>
-        <circle cx="650" cy="195" r="4" fill="#C8502A"/>
-        <circle cx="590" cy="240" r="4" fill="#C8502A"/>
-        <circle cx="330" cy="268" r="4" fill="#C8502A"/>
-        <circle cx="100" cy="295" r="6" fill="#7A9E7E"/>
-        <!-- Labels -->
-        <text x="875" y="72" fill="#F5ECD7" font-size="11" font-family="DM Sans,sans-serif" font-weight="500">Mason, NH</text>
-        <text x="725" y="148" fill="#EAD9C0" font-size="10" font-family="DM Sans,sans-serif">Pittsburgh</text>
-        <text x="655" y="188" fill="#EAD9C0" font-size="10" font-family="DM Sans,sans-serif">Louisville</text>
-        <circle cx="590" cy="240" r="3" fill="#D4943A" opacity="0.8"/>
-        <text x="595" y="235" fill="#D4943A" font-size="9" font-family="DM Sans,sans-serif">Memphis 🍖</text>
-        <text x="555" y="262" fill="#EAD9C0" font-size="10" font-family="DM Sans,sans-serif">Little Rock</text>
-        <text x="335" y="261" fill="#EAD9C0" font-size="10" font-family="DM Sans,sans-serif">Amarillo</text>
-        <text x="60" y="312" fill="#7A9E7E" font-size="11" font-family="DM Sans,sans-serif" font-weight="500">Scottsdale, AZ</text>
-        <!-- Mileage label -->
-        <text x="480" y="370" fill="#6B5E56" font-size="10" font-family="DM Sans,sans-serif" text-anchor="middle" letter-spacing="2">~ 2,280 MILES · 5 DAYS · I-90 → I-40 → I-25 → I-10</text>
-      </svg>
-    </div>
-    <a href="https://www.google.com/maps/dir/Mason,NH/Pittsburgh,PA/Louisville,KY/Memphis,TN/Little+Rock,AR/Amarillo,TX/Scottsdale,AZ" target="_blank" style="position:absolute;bottom:1rem;right:1rem;background:rgba(26,22,20,0.85);color:#5B8FA8;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.5rem 0.85rem;text-decoration:none;border:1px solid rgba(255,255,255,0.08);border-radius:2px;">Open in Google Maps ↗</a>
+    <div id="routeMap" style="width:100%;height:100%;"></div>
+    <a href="https://www.google.com/maps/dir/Mason,NH/Pittsburgh,PA/Louisville,KY/Memphis,TN/Little+Rock,AR/Amarillo,TX/Scottsdale,AZ" target="_blank" style="position:absolute;bottom:1rem;right:1rem;z-index:1000;background:rgba(26,22,20,0.85);color:#5B8FA8;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.5rem 0.85rem;text-decoration:none;border:1px solid rgba(255,255,255,0.08);border-radius:2px;">Open in Google Maps ↗</a>
   </div>
 </section>
 
@@ -1568,6 +1535,67 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 loadTodos();
 loadTasks();
 loadPacking();
+
+// ─── ROUTE MAP ──────────────────────────────────────────────────────────────
+(function initRouteMap() {
+  const stops = [
+    { name: 'Mason, NH',      lat: 42.748,  lng: -71.967, type: 'start' },
+    { name: 'Pittsburgh, PA', lat: 40.440,  lng: -79.995, type: 'stop' },
+    { name: 'Louisville, KY', lat: 38.252,  lng: -85.758, type: 'stop' },
+    { name: 'Memphis, TN',    lat: 35.149,  lng: -90.048, type: 'lunch' },
+    { name: 'Little Rock, AR',lat: 34.746,  lng: -92.289, type: 'stop' },
+    { name: 'Amarillo, TX',   lat: 35.221,  lng: -101.831,type: 'stop' },
+    { name: 'Scottsdale, AZ', lat: 33.494,  lng: -111.926,type: 'end' },
+  ];
+
+  const map = L.map('routeMap', { zoomControl: true, scrollWheelZoom: false, attributionControl: false });
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    maxZoom: 19,
+  }).addTo(map);
+
+  // Route polyline
+  const latlngs = stops.map(s => [s.lat, s.lng]);
+  L.polyline(latlngs, {
+    color: '#C8502A',
+    weight: 3,
+    dashArray: '8, 6',
+    opacity: 0.9,
+  }).addTo(map);
+
+  // Markers
+  stops.forEach(stop => {
+    const colors = { start: '#F5ECD7', end: '#7A9E7E', stop: '#C8502A', lunch: '#D4943A' };
+    const sizes  = { start: 10, end: 12, stop: 8, lunch: 7 };
+    const color  = colors[stop.type];
+    const size   = sizes[stop.type];
+    const suffix = stop.type === 'lunch' ? ' 🍖' : '';
+
+    const icon = L.divIcon({
+      className: '',
+      html: `<div style="width:${size}px;height:${size}px;border-radius:50%;background:${color};border:2px solid rgba(0,0,0,0.4);box-shadow:0 0 6px ${color}55;"></div>`,
+      iconSize: [size, size],
+      iconAnchor: [size/2, size/2],
+    });
+
+    L.marker([stop.lat, stop.lng], { icon })
+      .addTo(map)
+      .bindTooltip(`<strong>${stop.name}${suffix}</strong>`, {
+        permanent: false,
+        direction: 'top',
+        className: 'map-tooltip',
+        offset: [0, -size/2 - 4],
+      });
+  });
+
+  // Fit map to route with padding
+  map.fitBounds(L.latLngBounds(latlngs), { padding: [40, 60] });
+})();
 </script>
+<style>
+  .map-tooltip { background: rgba(26,22,20,0.92); border: 1px solid rgba(255,255,255,0.12); color: #F5ECD7; font-family: 'DM Sans', sans-serif; font-size: 0.75rem; padding: 4px 8px; border-radius: 2px; box-shadow: none; }
+  .map-tooltip::before { display: none; }
+  .leaflet-control-attribution { display: none; }
+</style>
 </body>
 </html>
