@@ -991,7 +991,7 @@
   <div class="route-legs" id="routeLegs"></div>
   <div class="map-container reveal" style="margin-top:2rem; height:420px; border-radius:3px; overflow:hidden; position:relative; background:#1a1614;">
     <div id="routeMap" style="width:100%;height:100%;"></div>
-    <a href="https://www.google.com/maps/dir/Mason,NH/Pittsburgh,PA/Louisville,KY/Memphis,TN/Little+Rock,AR/Amarillo,TX/Scottsdale,AZ" target="_blank" style="position:absolute;bottom:1rem;right:1rem;z-index:1000;background:rgba(26,22,20,0.85);color:#5B8FA8;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.5rem 0.85rem;text-decoration:none;border:1px solid rgba(255,255,255,0.08);border-radius:2px;">Open in Google Maps ↗</a>
+    <a href="https://www.google.com/maps/dir/Mason,NH/Pittsburgh,PA/Louisville,KY/Memphis,TN/Amarillo,TX/Scottsdale,AZ" target="_blank" style="position:absolute;bottom:1rem;right:1rem;z-index:1000;background:rgba(26,22,20,0.85);color:#5B8FA8;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.5rem 0.85rem;text-decoration:none;border:1px solid rgba(255,255,255,0.08);border-radius:2px;">Open in Google Maps ↗</a>
   </div>
 </section>
 
@@ -1020,10 +1020,10 @@
 
 const todos = [
   { title: 'Book U-Haul Trailer', urgency: 'Do this week — peak season', desc: 'Reserve a 6\' x 12\' Cargo Trailer (one-way) at <a href="https://www.uhaul.com" target="_blank">uhaul.com</a>. Pick up Milford, NH — Tuesday, March 25. Drop off Scottsdale, AZ. Confirm drop-off location closer to move date.', done: false },
-  { title: 'Book Hotel: Pittsburgh', urgency: 'Do this week', desc: 'Courtyard by Marriott Pittsburgh Downtown · 945 Penn Ave · (412) 434-5551 · Book via <a href="https://www.marriott.com" target="_blank">Bonvoy app</a>. Confirm trailer parking.', done: false },
-  { title: 'Book Hotel: Louisville', urgency: 'Do this week', desc: 'Louisville Marriott Downtown · 280 W Jefferson St · (502) 627-5045 · Book via <a href="https://www.marriott.com" target="_blank">Bonvoy app</a>. Confirm trailer parking.', done: false },
-  { title: 'Book Hotel: Little Rock', urgency: 'Do this week', desc: 'Little Rock Marriott · 3 Statehouse Plaza · (501) 374-6000 · Book via <a href="https://www.marriott.com" target="_blank">Bonvoy app</a>. Downtown on the Arkansas River.', done: false },
-  { title: 'Book Hotel: Amarillo', urgency: 'Do this week', desc: 'SpringHill Suites Amarillo · 2301 Cinema Dr · (806) 381-3400 · Book via <a href="https://www.marriott.com" target="_blank">Bonvoy app</a>. Free breakfast included.', done: false },
+  { title: 'Book Hotel: Pittsburgh', urgency: '✅ Booked — Conf #93394982', desc: 'Fairfield by Marriott Pittsburgh Downtown · 435 Fort Pitt Blvd · (412) 515-2100 · Check-in Mar 27 @ 3pm · $147.06 total.', done: true },
+  { title: 'Book Hotel: Louisville', urgency: '⚠️ Not booked — Do this week', desc: 'Louisville Marriott Downtown · 280 W Jefferson St · (502) 627-5045 · Book via <a href="https://www.marriott.com" target="_blank">Bonvoy app</a>. Night of Mar 28. Confirm trailer parking.', done: false },
+  { title: 'Book Hotel: Memphis', urgency: '✅ Booked — Conf #99094728', desc: 'Courtyard by Marriott Memphis Downtown · 75 Jefferson Ave · (901) 522-2200 · Check-in Mar 29 @ 3pm · $157.56 total. Guest room, 1 King, Sofa bed.', done: true },
+  { title: 'Book Hotel: Amarillo', urgency: '⚠️ Not booked — Do this week', desc: 'SpringHill Suites Amarillo · 2301 Cinema Dr · (806) 381-3400 · Book via <a href="https://www.marriott.com" target="_blank">Bonvoy app</a>. Night of Mar 30. Free breakfast included.', done: false },
   { title: 'Schedule Jeep Service', urgency: 'Before Mar 3', desc: 'Oil change, tire rotation, tow hitch inspection, transmission fluid check. Wrangler Class III hitch rated 3,500 lbs. Loaded 6\' x 12\' Cargo Trailer runs ~1,800–2,200 lbs.', done: false },
   { title: 'Set Up APS Electric', urgency: 'By Mar 15', desc: 'Arizona Public Service — set up electric account for your Scottsdale place starting March 24. Visit <a href="https://www.aps.com" target="_blank">aps.com</a>.', done: false },
   { title: 'Set Up Internet in Scottsdale', urgency: 'By Mar 15', desc: 'Cox is the main provider in Scottsdale. Schedule install for first week of occupancy. Book early — install slots fill up.', done: false },
@@ -1200,10 +1200,10 @@ const furniture = [
 ];
 
 const legs = [
-  { day: 1, date: 'Thursday, March 27', from: 'Mason, NH', to: 'Pittsburgh, PA', miles: '~570', hours: '~8.5', depart: '7:00 AM', hotel: 'Courtyard Pittsburgh Downtown', rating: '4.4 ★', phone: '(412) 434-5551', addr: '945 Penn Ave, Pittsburgh, PA 15222', url: 'https://www.marriott.com/en-us/hotels/pitcy-courtyard-pittsburgh-downtown/overview/', highway: 'I-93 S → I-90 W → I-84 W → I-81 S → I-76 W (PA Turnpike)', tip: 'Your longest day. Set alarm for 6:00 AM. Refuel in Binghamton, NY at the halfway point. Call ahead to confirm trailer parking.' },
+  { day: 1, date: 'Thursday, March 27', from: 'Mason, NH', to: 'Pittsburgh, PA', miles: '~570', hours: '~8.5', depart: '7:00 AM', hotel: 'Fairfield by Marriott Pittsburgh Downtown', rating: '4.3 ★', phone: '(412) 515-2100', addr: '435 Fort Pitt Blvd, Pittsburgh, PA 15219', url: 'https://www.marriott.com/en-us/hotels/pitfd-fairfield-inn-and-suites-pittsburgh-downtown/overview/', highway: 'I-93 S → I-90 W → I-84 W → I-81 S → I-76 W (PA Turnpike)', tip: 'Your longest day. Set alarm for 6:00 AM. Refuel in Binghamton, NY at the halfway point. Call ahead to confirm trailer parking. ✅ Conf #93394982' },
   { day: 2, date: 'Friday, March 28', from: 'Pittsburgh, PA', to: 'Louisville, KY', miles: '~390', hours: '~6', depart: '7:00 AM', hotel: 'Louisville Marriott Downtown', rating: '4.4 ★', phone: '(502) 627-5045', addr: '280 W Jefferson St, Louisville, KY 40202', url: 'https://www.marriott.com/en-us/hotels/sdflm-louisville-marriott-downtown/overview/', highway: 'I-79 S → I-68 W → I-79 S → I-64 W', tip: 'Your easiest day mileage-wise. Arrive early afternoon. The Louisville Marriott is the standout hotel of the trip — legendary bourbon bar and elite lounge. Walk the Ohio River waterfront.' },
-  { day: 3, date: 'Saturday, March 29', from: 'Louisville, KY', to: 'Little Rock, AR', miles: '~520', hours: '~8', depart: '8:00 AM', hotel: 'Marriott Little Rock', rating: '4.3 ★', phone: '(501) 374-6000', addr: '3 Statehouse Plaza, Little Rock, AR 72201', url: 'https://www.marriott.com/en-us/hotels/litmc-little-rock-marriott/overview/', highway: 'I-65 S → I-40 W', tip: 'Leave at 8:00 AM → rolling into Memphis right at 2:00 PM for lunch. Hit Central BBQ or grab a bite on Beale Street. Then push on ~2 hrs to Little Rock for an easy late afternoon arrival. Downtown Marriott puts you right on the Arkansas River.' },
-  { day: 4, date: 'Sunday, March 30', from: 'Little Rock, AR', to: 'Amarillo, TX', miles: '~560', hours: '~8', depart: '7:00 AM', hotel: 'SpringHill Suites Amarillo', rating: '4.4 ★', phone: '(806) 381-3400', addr: '2301 Cinema Dr, Amarillo, TX 79124', url: 'https://www.marriott.com/en-us/hotels/amash-springhill-suites-amarillo/overview/', highway: 'I-40 W all the way through OK and into TX', tip: 'Big push day across Oklahoma\'s open plains. Fuel up in Oklahoma City (~3.5 hrs in). The landscape opens dramatically once you cross into the Texas Panhandle. Spacious suite and free breakfast at SpringHill Amarillo.' },
+  { day: 3, date: 'Saturday, March 29', from: 'Louisville, KY', to: 'Memphis, TN', miles: '~390', hours: '~6', depart: '8:00 AM', hotel: 'Courtyard by Marriott Memphis Downtown', rating: '4.3 ★', phone: '(901) 522-2200', addr: '75 Jefferson Ave, Memphis, TN 38103', url: 'https://www.marriott.com/en-us/hotels/memcy-courtyard-memphis-downtown/overview/', highway: 'I-65 S → I-40 W', tip: 'Leave at 8:00 AM → rolling into Memphis right at 2:00 PM. Hit Central BBQ on Central Ave or grab something on Beale Street. Easy afternoon — check in, walk the riverfront, grab dinner. Memphis night. ✅ Conf #99094728' },
+  { day: 4, date: 'Sunday, March 30', from: 'Memphis, TN', to: 'Amarillo, TX', miles: '~560', hours: '~8', depart: '7:00 AM', hotel: 'SpringHill Suites Amarillo', rating: '4.4 ★', phone: '(806) 381-3400', addr: '2301 Cinema Dr, Amarillo, TX 79124', url: 'https://www.marriott.com/en-us/hotels/amash-springhill-suites-amarillo/overview/', highway: 'I-40 W all the way through OK and into TX', tip: 'Big push day across Oklahoma\'s open plains. Fuel up in Oklahoma City (~3.5 hrs in). The landscape opens dramatically once you cross into the Texas Panhandle. Spacious suite and free breakfast at SpringHill Amarillo.' },
   { day: 5, date: 'Monday, March 31', from: 'Amarillo, TX', to: 'Scottsdale, AZ', miles: '~430', hours: '~6', depart: '8:00 AM', hotel: 'Your New Place 🏜', rating: 'Home', phone: '', addr: 'Scottsdale, AZ', url: '', highway: 'I-40 W → I-25 S (Albuquerque) → I-10 W → AZ-101 N', tip: 'The final stretch. Stop in Albuquerque for lunch (~3 hrs). Drop the 6\' x 12\' Cargo Trailer at your Scottsdale U-Haul drop-off. Then: keys to your new place. Welcome to Arizona.' },
 ];
 
@@ -1539,13 +1539,12 @@ loadPacking();
 // ─── ROUTE MAP ──────────────────────────────────────────────────────────────
 (function initRouteMap() {
   const stops = [
-    { name: 'Mason, NH',      lat: 42.748,  lng: -71.967, type: 'start' },
-    { name: 'Pittsburgh, PA', lat: 40.440,  lng: -79.995, type: 'stop' },
-    { name: 'Louisville, KY', lat: 38.252,  lng: -85.758, type: 'stop' },
-    { name: 'Memphis, TN',    lat: 35.149,  lng: -90.048, type: 'lunch' },
-    { name: 'Little Rock, AR',lat: 34.746,  lng: -92.289, type: 'stop' },
-    { name: 'Amarillo, TX',   lat: 35.221,  lng: -101.831,type: 'stop' },
-    { name: 'Scottsdale, AZ', lat: 33.494,  lng: -111.926,type: 'end' },
+    { name: 'Mason, NH',      lat: 42.748,  lng: -71.967,  type: 'start' },
+    { name: 'Pittsburgh, PA', lat: 40.440,  lng: -79.995,  type: 'stop' },
+    { name: 'Louisville, KY', lat: 38.252,  lng: -85.758,  type: 'stop' },
+    { name: 'Memphis, TN',    lat: 35.149,  lng: -90.048,  type: 'stop' },
+    { name: 'Amarillo, TX',   lat: 35.221,  lng: -101.831, type: 'stop' },
+    { name: 'Scottsdale, AZ', lat: 33.494,  lng: -111.926, type: 'end' },
   ];
 
   const map = L.map('routeMap', { zoomControl: true, scrollWheelZoom: false, attributionControl: false });
