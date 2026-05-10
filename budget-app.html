@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jay Budget Command Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #101828;
+      --paper: #f8fafc;
+      --card: #ffffff;
+      --accent: #0f766e;
+      --accent-2: #0369a1;
+      --warn: #b45309;
+      --danger: #b91c1c;
+      --line: #e2e8f0;
+      --soft: #f1f5f9;
+      --muted: #64748b;
+      --ok: #15803d;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at 10% 0%, #dbeafe 0%, #f8fafc 38%) fixed;
+    }
+
+    .app {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .hero {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background:
+        linear-gradient(120deg, rgba(15,118,110,0.08), rgba(3,105,161,0.08)),
+        var(--card);
+      padding: 24px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    h1 {
+      font-family: 'Archivo', sans-serif;
+      margin: 0;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.05;
+    }
+
+    .sub {
+      color: var(--muted);
+      max-width: 72ch;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .tab {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #334155;
+    }
+
+    .tab.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: inset 0 0 0 1px var(--accent);
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .panel {
+      margin-top: 18px;
+      display: none;
+      gap: 16px;
+    }
+
+    .panel.active { display: grid; }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .value {
+      font-family: 'Archivo', sans-serif;
+      font-weight: 800;
+      margin-top: 8px;
+      font-size: clamp(24px, 2.5vw, 34px);
+      line-height: 1;
+    }
+
+    .hint {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 16px;
+    }
+
+    .section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .section h2 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      font-family: 'Archivo', sans-serif;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(120px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .row-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(110px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .inline-check {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 10px;
+    }
+
+    .inline-check input {
+      width: auto;
+    }
+
+    input, select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px;
+      font-family: inherit;
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 8px 6px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 9px 12px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-muted { background: var(--soft); color: #0f172a; }
+    .btn-danger { background: #fee2e2; color: var(--danger); }
+
+    .status {
+      border-radius: 999px;
+      display: inline-flex;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #ecfeff;
+      color: #0e7490;
+      margin-bottom: 8px;
+    }
+
+    .status.warn { background: #fff7ed; color: var(--warn); }
+    .status.danger { background: #fef2f2; color: var(--danger); }
+
+    .small {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .metric-list {
+      display: grid;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .metric-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 14px;
+    }
+
+    .forecast-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .forecast-metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      background: var(--soft);
+    }
+
+    .forecast-metric strong {
+      display: block;
+      font-family: 'Archivo', sans-serif;
+      font-size: 22px;
+      margin-top: 5px;
+    }
+
+    @media (max-width: 900px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="hero">
+      <div class="eyebrow">Personal Finance OS</div>
+      <h1>Budget Command Center</h1>
+      <div class="top-actions">
+        <button class="btn-muted" id="export-data">Export Backup</button>
+        <button class="btn-muted" id="import-data">Import Backup</button>
+        <input id="import-file" type="file" accept="application/json" hidden />
+      </div>
+      <div class="tabs">
+        <button class="tab active" data-tab="dashboard">Dashboard</button>
+        <button class="tab" data-tab="cashflow">Cash Flow Timeline</button>
+        <button class="tab" data-tab="transactions">Money In / Out</button>
+        <button class="tab" data-tab="creditcards">Credit Cards</button>
+        <button class="tab" data-tab="postmove">Assets + Budget</button>
+      </div>
+    </section>
+
+    <section class="panel active" id="panel-dashboard">
+      <div class="cards">
+        <article class="card">
+          <div class="label">Current Assets</div>
+          <div class="value" id="kpi-starting">$0</div>
+        </article>
+        <article class="card">
+          <div class="label">Projected End Balance</div>
+          <div class="value" id="kpi-ending">$0</div>
+        </article>
+        <article class="card">
+          <div class="label">Lowest Balance</div>
+          <div class="value" id="kpi-lowest">$0</div>
+          <div class="hint" id="kpi-lowest-date">-</div>
+        </article>
+        <article class="card">
+          <div class="label">CC Payoff Target</div>
+          <div class="value" id="kpi-phase1">$0</div>
+        </article>
+        <article class="card">
+          <div class="label">Monthly Cushion</div>
+          <div class="value" id="kpi-monthly">$0</div>
+          <div class="hint" id="kpi-runway">-</div>
+        </article>
+      </div>
+
+      <div class="grid-2">
+        <article class="section">
+          <h2>Planning Window</h2>
+          <div id="cash-status" class="status">Stable</div>
+          <div class="row-3">
+            <label>Start date<input id="move-start-date" type="date" /></label>
+            <label>End date<input id="move-end-date" type="date" /></label>
+            <label>Opening cash<input id="starting-cash" type="number" step="0.01" /></label>
+          </div>
+          <label class="inline-check">
+            <input id="use-assets-opening" type="checkbox" />
+            Use current assets as opening cash
+          </label>
+          <div class="actions">
+            <button class="btn-primary" id="save-window">Save Window</button>
+            <button class="btn-muted" id="seed-template">Reset Demo Data</button>
+          </div>
+          <p class="small">Use this range to project your cash position across income, recurring bills, and credit card payoff.</p>
+        </article>
+
+        <article class="section">
+          <h2>Monthly Snapshot</h2>
+          <div class="metric-list" id="breakdown-list"></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-cashflow">
+      <article class="section">
+        <h2>Daily Cash Flow</h2>
+        <p class="small">Auto-calculated from income, recurring bills, and planned credit card payoff.</p>
+        <div style="overflow:auto; max-height: 520px; margin-top: 10px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Start</th>
+                <th>Income</th>
+                <th>Recurring</th>
+                <th>CC Payoff</th>
+                <th>Net</th>
+                <th>End</th>
+              </tr>
+            </thead>
+            <tbody id="cashflow-body"></tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel" id="panel-transactions">
+      <div class="grid-2">
+        <article class="section">
+          <h2>Expected Income</h2>
+          <div style="overflow:auto; max-height: 360px;">
+            <table>
+              <thead><tr><th>Start</th><th>Description</th><th>Amount</th><th>Frequency</th><th></th></tr></thead>
+              <tbody id="inflows-body"></tbody>
+            </table>
+          </div>
+          <div class="actions"><button class="btn-primary" id="add-inflow">Add Income</button></div>
+        </article>
+
+        <article class="section">
+          <h2>Recurring Outflows</h2>
+          <div style="overflow:auto; max-height: 360px;">
+            <table>
+              <thead><tr><th>Start</th><th>Description</th><th>Amount</th><th>Frequency</th><th></th></tr></thead>
+              <tbody id="bills-body"></tbody>
+            </table>
+          </div>
+          <div class="actions">
+            <button class="btn-primary" id="add-bill">Add Outflow</button>
+            <button class="btn-muted" id="apply-current-bills">Apply Current Bills</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-creditcards">
+      <article class="section">
+        <h2>Credit Card Payoff</h2>
+        <p class="small">Track the card balance you plan to pay off monthly, plus expected new card spend.</p>
+        <div style="overflow:auto; max-height: 360px;">
+          <table>
+            <thead><tr><th>Card</th><th>Current Balance</th><th>Expected New Charges</th><th>Payoff Date</th><th>Exposure</th><th></th></tr></thead>
+            <tbody id="cards-body"></tbody>
+          </table>
+        </div>
+        <div class="actions">
+          <button class="btn-primary" id="add-card">Add Card</button>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel" id="panel-postmove">
+      <article class="section">
+        <h2>Month-End Budget Outlook</h2>
+        <div class="forecast-grid">
+          <div class="forecast-metric">
+            <span class="label">Known Bills</span>
+            <strong id="outlook-bills">$0</strong>
+          </div>
+          <div class="forecast-metric">
+            <span class="label">Budgeted CC Spend</span>
+            <strong id="outlook-budget">$0</strong>
+          </div>
+          <div class="forecast-metric">
+            <span class="label">End Cash If Hit Budget</span>
+            <strong id="outlook-cash">$0</strong>
+          </div>
+          <div class="forecast-metric">
+            <span class="label">Net After New CC Spend</span>
+            <strong id="outlook-net">$0</strong>
+          </div>
+        </div>
+        <div style="overflow:auto; max-height: 320px; margin-top: 12px;">
+          <table>
+            <thead><tr><th>Month</th><th>Start Cash</th><th>Income</th><th>Known Bills</th><th>CC Payoff</th><th>Budgeted CC Spend</th><th>End Cash</th><th>Net Position</th></tr></thead>
+            <tbody id="budget-forecast-body"></tbody>
+          </table>
+        </div>
+      </article>
+      <div class="grid-2">
+        <article class="section">
+          <h2>Current Assets</h2>
+          <div class="row">
+            <label>Monthly income<input id="monthly-income" type="number" step="0.01" /></label>
+            <label>Extra fixed base cost<input id="monthly-rent" type="number" step="0.01" /></label>
+          </div>
+          <div style="overflow:auto; max-height: 320px; margin-top: 10px;">
+            <table>
+              <thead><tr><th>Asset</th><th>Type</th><th>Amount</th><th></th></tr></thead>
+              <tbody id="assets-body"></tbody>
+            </table>
+          </div>
+          <div class="actions">
+            <button class="btn-primary" id="add-asset">Add Asset</button>
+            <button class="btn-primary" id="save-monthly">Save Monthly Plan</button>
+          </div>
+          <div class="metric-list" id="monthly-summary"></div>
+        </article>
+
+        <article class="section">
+          <h2>Card Budget Categories</h2>
+          <div style="overflow:auto; max-height: 420px;">
+            <table>
+              <thead><tr><th>Category</th><th>Budget</th><th>Actual</th><th></th></tr></thead>
+              <tbody id="categories-body"></tbody>
+            </table>
+          </div>
+          <div class="actions">
+            <button class="btn-primary" id="add-category">Add Category</button>
+            <button class="btn-muted" id="apply-budget-template">Apply Budget Template</button>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const STORAGE_KEY = 'jay-budget-command-center-v8';
+    const LEGACY_STORAGE_KEYS = ['jay-budget-command-center-v7', 'jay-budget-command-center-v6', 'jay-budget-command-center-v5', 'jay-budget-command-center-v4', 'jay-budget-command-center-v3', 'jay-budget-command-center-v2'];
+    const CURRENT_CHECKING_BALANCE = 8832.31;
+    const CURRENT_PAYCHECK_AMOUNT = 3724.15;
+    const memoryStore = {};
+
+    function readStorage(key) {
+      try {
+        return window.localStorage.getItem(key);
+      } catch (error) {
+        return memoryStore[key] || null;
+      }
+    }
+
+    function writeStorage(key, value) {
+      memoryStore[key] = value;
+      try {
+        window.localStorage.setItem(key, value);
+      } catch (error) {
+        // The in-app browser may block file:// localStorage; keep this session usable anyway.
+      }
+    }
+
+    function localISO(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    function currentMonthDay(day) {
+      const now = new Date();
+      const last = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+      return localISO(new Date(now.getFullYear(), now.getMonth(), Math.min(day, last)));
+    }
+
+    function nextMonthDay(day) {
+      const now = new Date();
+      const last = new Date(now.getFullYear(), now.getMonth() + 2, 0).getDate();
+      return localISO(new Date(now.getFullYear(), now.getMonth() + 1, Math.min(day, last)));
+    }
+
+    function todayISO() {
+      return localISO(new Date());
+    }
+
+    function currentMonthEnd() {
+      const now = new Date();
+      return localISO(new Date(now.getFullYear(), now.getMonth() + 1, 0));
+    }
+
+    function nextMonthEnd() {
+      const now = new Date();
+      return localISO(new Date(now.getFullYear(), now.getMonth() + 2, 0));
+    }
+
+    const DEFAULT_ASSETS = [
+      { name: 'Checking', type: 'Cash', amount: CURRENT_CHECKING_BALANCE },
+      { name: 'Savings', type: 'Cash', amount: 0 },
+      { name: 'Emergency Fund', type: 'Reserve', amount: 0 }
+    ];
+
+    const DEFAULT_RECURRING_BILLS = [
+      { date: currentMonthDay(1), description: 'Rent', amount: 2495, frequency: 'monthly' },
+      { date: currentMonthEnd(), description: 'Electric', amount: 100, frequency: 'monthly' },
+      { date: currentMonthDay(26), description: 'Cox Internet', amount: 79, frequency: 'monthly' },
+      { date: currentMonthDay(27), description: 'Spotify', amount: 21, frequency: 'monthly' },
+      { date: currentMonthDay(28), description: 'AT&T', amount: 180, frequency: 'monthly' },
+      { date: currentMonthDay(29), description: 'YouTube TV', amount: 83, frequency: 'monthly' }
+    ];
+
+    const DEFAULT_BUDGET_CATEGORIES = [
+      { name: 'Groceries / household', budget: 0, actual: 0 },
+      { name: 'Gas / transportation', budget: 0, actual: 0 },
+      { name: 'Dining / coffee', budget: 0, actual: 0 },
+      { name: 'Kids / family', budget: 0, actual: 0 },
+      { name: 'Personal / misc', budget: 0, actual: 0 },
+      { name: 'Buffer', budget: 0, actual: 0 }
+    ];
+
+    const DEFAULT_CREDIT_CARDS = [
+      { name: 'Primary Credit Card', balance: 0, monthlyCharges: 0, paymentDate: currentMonthDay(25) }
+    ];
+
+    const seedState = {
+      movePlan: {
+        startDate: todayISO(),
+        endDate: nextMonthEnd(),
+        startingCash: 0,
+        inflows: [
+          { date: currentMonthDay(25), description: 'Paycheck - 25th', amount: CURRENT_PAYCHECK_AMOUNT, frequency: 'monthly' },
+          { date: nextMonthDay(10), description: 'Paycheck - 10th', amount: CURRENT_PAYCHECK_AMOUNT, frequency: 'monthly' }
+        ],
+        bills: DEFAULT_RECURRING_BILLS,
+        moveCosts: []
+      },
+      assets: DEFAULT_ASSETS,
+      creditCards: DEFAULT_CREDIT_CARDS,
+      settings: {
+        useAssetsAsOpening: true
+      },
+      postMove: {
+        monthlyIncome: CURRENT_PAYCHECK_AMOUNT * 2,
+        monthlyRent: 0,
+        categories: DEFAULT_BUDGET_CATEGORIES
+      }
+    };
+
+    function cloneSeed() {
+      return JSON.parse(JSON.stringify(seedState));
+    }
+
+    function hydrateState(saved = {}) {
+      const base = cloneSeed();
+      const next = {
+        ...base,
+        ...saved,
+        movePlan: { ...base.movePlan, ...(saved.movePlan || {}) },
+        postMove: {
+          ...base.postMove,
+          ...(saved.postMove || {}),
+          categories: saved.postMove && saved.postMove.categories ? saved.postMove.categories : base.postMove.categories
+        },
+        assets: saved.assets || base.assets,
+        creditCards: saved.creditCards || base.creditCards,
+        settings: { ...base.settings, ...(saved.settings || {}) }
+      };
+
+      if (!Array.isArray(next.assets)) {
+        next.assets = JSON.parse(JSON.stringify(DEFAULT_ASSETS));
+      }
+      next.movePlan.inflows.forEach(item => {
+        if (!item.frequency) item.frequency = 'once';
+      });
+      next.movePlan.bills.forEach(item => {
+        if (!item.frequency) item.frequency = 'once';
+      });
+      if (!Array.isArray(next.creditCards)) {
+        next.creditCards = JSON.parse(JSON.stringify(DEFAULT_CREDIT_CARDS));
+      }
+      next.creditCards.forEach(card => {
+        if (card.balance == null) card.balance = 0;
+        if (card.monthlyCharges == null) card.monthlyCharges = 0;
+        if (!card.paymentDate) card.paymentDate = currentMonthDay(25);
+      });
+      return next;
+    }
+
+    function applyCurrentSnapshot(next) {
+      const checking = next.assets.find(asset => asset.name.toLowerCase() === 'checking');
+      if (checking) {
+        checking.amount = CURRENT_CHECKING_BALANCE;
+      } else {
+        next.assets.unshift({ name: 'Checking', type: 'Cash', amount: CURRENT_CHECKING_BALANCE });
+      }
+
+      next.movePlan.startDate = todayISO();
+      next.movePlan.endDate = nextMonthEnd();
+      next.settings.useAssetsAsOpening = true;
+      next.postMove.monthlyIncome = CURRENT_PAYCHECK_AMOUNT * 2;
+      const otherIncome = next.movePlan.inflows.filter(item => !/paycheck/i.test(item.description || ''));
+      next.movePlan.inflows = [
+        { date: currentMonthDay(25), description: 'Paycheck - 25th', amount: CURRENT_PAYCHECK_AMOUNT, frequency: 'monthly' },
+        { date: nextMonthDay(10), description: 'Paycheck - 10th', amount: CURRENT_PAYCHECK_AMOUNT, frequency: 'monthly' },
+        ...otherIncome
+      ];
+      next.movePlan.bills = JSON.parse(JSON.stringify(DEFAULT_RECURRING_BILLS));
+      next.movePlan.moveCosts = [];
+      next.postMove.monthlyRent = 0;
+      next.postMove.categories = JSON.parse(JSON.stringify(DEFAULT_BUDGET_CATEGORIES));
+      if (!Array.isArray(next.creditCards) || !next.creditCards.length) {
+        next.creditCards = JSON.parse(JSON.stringify(DEFAULT_CREDIT_CARDS));
+      }
+      return next;
+    }
+
+    function applyCurrentBills() {
+      state.movePlan.bills = JSON.parse(JSON.stringify(DEFAULT_RECURRING_BILLS));
+      state.postMove.monthlyRent = 0;
+      save();
+    }
+
+    function applyBudgetTemplate() {
+      state.postMove.categories = JSON.parse(JSON.stringify(DEFAULT_BUDGET_CATEGORIES));
+      save();
+    }
+
+    function loadState() {
+      try {
+        const raw = readStorage(STORAGE_KEY);
+        if (raw) return hydrateState(JSON.parse(raw));
+
+        for (const key of LEGACY_STORAGE_KEYS) {
+          const legacy = readStorage(key);
+          if (legacy) return applyCurrentSnapshot(hydrateState(JSON.parse(legacy)));
+        }
+
+        return applyCurrentSnapshot(hydrateState());
+      } catch (error) {
+        return applyCurrentSnapshot(hydrateState());
+      }
+    }
+
+    let state = loadState();
+    writeStorage(STORAGE_KEY, JSON.stringify(state));
+
+    function money(n) {
+      const v = Number(n || 0);
+      return v.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 });
+    }
+
+    function attr(value) {
+      return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function sum(items, selector) {
+      return items.reduce((a, b) => a + Number(selector(b) || 0), 0);
+    }
+
+    function assetTotal() {
+      return sum(state.assets, x => x.amount);
+    }
+
+    function openingBalance() {
+      return state.settings.useAssetsAsOpening ? assetTotal() : Number(state.movePlan.startingCash || 0);
+    }
+
+    function recurringBillsTotal() {
+      return sum(state.movePlan.bills, x => x.amount);
+    }
+
+    function creditCardPayoffTotal() {
+      return sum(state.creditCards, x => x.balance);
+    }
+
+    function creditCardChargesTotal() {
+      return sum(state.creditCards, x => x.monthlyCharges);
+    }
+
+    function budgetCategoryTotal() {
+      return sum(state.postMove.categories, x => x.budget);
+    }
+
+    function monthlyKnownBillsTotal() {
+      return recurringBillsTotal() + Number(state.postMove.monthlyRent || 0);
+    }
+
+    function buildBudgetForecast(months) {
+      const rows = [];
+      let cash = assetTotal();
+      let cardPayoff = creditCardPayoffTotal();
+      const income = Number(state.postMove.monthlyIncome || 0);
+      const bills = monthlyKnownBillsTotal();
+      const budgetedSpend = budgetCategoryTotal() + creditCardChargesTotal();
+      const now = new Date();
+
+      for (let i = 0; i < months; i++) {
+        const month = new Date(now.getFullYear(), now.getMonth() + i, 1);
+        const startCash = cash;
+        cash = cash + income - bills - cardPayoff;
+        rows.push({
+          month: month.toLocaleString('en-US', { month: 'short', year: 'numeric' }),
+          startCash,
+          income,
+          bills,
+          cardPayoff,
+          budgetedSpend,
+          endCash: cash,
+          netPosition: cash - budgetedSpend
+        });
+        cardPayoff = budgetedSpend;
+      }
+
+      return rows;
+    }
+
+    function parseISODate(value) {
+      return new Date(value + 'T00:00:00');
+    }
+
+    function dayDifference(startISO, endISO) {
+      return Math.round((parseISODate(endISO) - parseISODate(startISO)) / 86400000);
+    }
+
+    function lastDayOfMonth(date) {
+      return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+    }
+
+    function occursOn(item, dayISO) {
+      if (!item.date || dayISO < item.date) return false;
+      const frequency = item.frequency || 'once';
+      if (frequency === 'once') return dayISO === item.date;
+      const diff = dayDifference(item.date, dayISO);
+      if (frequency === 'weekly') return diff >= 0 && diff % 7 === 0;
+      if (frequency === 'biweekly') return diff >= 0 && diff % 14 === 0;
+      if (frequency === 'monthly') {
+        const start = parseISODate(item.date);
+        const day = parseISODate(dayISO);
+        const targetDay = Math.min(start.getDate(), lastDayOfMonth(day));
+        return day.getDate() === targetDay;
+      }
+      return dayISO === item.date;
+    }
+
+    function creditCardPayoffOn(dayISO) {
+      return sum(
+        state.creditCards.filter(card => occursOn({ date: card.paymentDate, frequency: 'monthly' }, dayISO)),
+        card => card.balance
+      );
+    }
+
+    function save() {
+      writeStorage(STORAGE_KEY, JSON.stringify(state));
+      render();
+    }
+
+    function dateRange(startISO, endISO) {
+      const out = [];
+      const start = new Date(startISO + 'T00:00:00');
+      const end = new Date(endISO + 'T00:00:00');
+      for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+        out.push(d.toISOString().slice(0, 10));
+      }
+      return out;
+    }
+
+    function calcCashFlow() {
+      const rows = [];
+      const days = dateRange(state.movePlan.startDate, state.movePlan.endDate);
+      let running = openingBalance();
+
+      for (const day of days) {
+        const inflows = sum(state.movePlan.inflows.filter(x => occursOn(x, day)), x => x.amount);
+        const bills = sum(state.movePlan.bills.filter(x => occursOn(x, day)), x => x.amount);
+        const cardPayoff = creditCardPayoffOn(day);
+        const startBal = running;
+        const net = inflows - bills - cardPayoff;
+        running += net;
+
+        rows.push({ date: day, start: startBal, inflows, bills, cardPayoff, net, end: running });
+      }
+      return rows;
+    }
+
+    function setStatus(flow) {
+      const badge = document.getElementById('cash-status');
+      const lowest = flow.reduce((acc, row) => (row.end < acc.end ? row : acc), flow[0] || { end: 0, date: '-' });
+
+      badge.className = 'status';
+      if (!flow.length) {
+        badge.textContent = 'No timeline data';
+        badge.classList.add('warn');
+        return lowest;
+      }
+
+      if (lowest.end < 0) {
+        badge.textContent = `Negative cash risk on ${lowest.date}`;
+        badge.classList.add('danger');
+      } else if (lowest.end < 1000) {
+        badge.textContent = `Tight cushion: lowest ${money(lowest.end)} on ${lowest.date}`;
+        badge.classList.add('warn');
+      } else {
+        badge.textContent = 'Stable: no negative days projected';
+      }
+      return lowest;
+    }
+
+    function frequencyOptions(selected) {
+      const labels = {
+        once: 'Once',
+        weekly: 'Weekly',
+        biweekly: 'Biweekly',
+        monthly: 'Monthly'
+      };
+      return Object.entries(labels)
+        .map(([value, label]) => `<option value="${value}" ${selected === value ? 'selected' : ''}>${label}</option>`)
+        .join('');
+    }
+
+    function renderMoveTables() {
+      const inflowsBody = document.getElementById('inflows-body');
+      const billsBody = document.getElementById('bills-body');
+
+      inflowsBody.innerHTML = '';
+      state.movePlan.inflows.forEach((row, i) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><input type="date" value="${attr(row.date)}" data-t="inflow" data-k="date" data-i="${i}"></td>
+          <td><input type="text" value="${attr(row.description)}" data-t="inflow" data-k="description" data-i="${i}"></td>
+          <td><input type="number" step="0.01" value="${attr(row.amount)}" data-t="inflow" data-k="amount" data-i="${i}"></td>
+          <td><select data-t="inflow" data-k="frequency" data-i="${i}">${frequencyOptions(row.frequency || 'once')}</select></td>
+          <td><button class="btn-danger" data-rm="inflow" data-i="${i}">Remove</button></td>
+        `;
+        inflowsBody.appendChild(tr);
+      });
+
+      billsBody.innerHTML = '';
+      state.movePlan.bills.forEach((row, i) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><input type="date" value="${attr(row.date)}" data-t="bill" data-k="date" data-i="${i}"></td>
+          <td><input type="text" value="${attr(row.description)}" data-t="bill" data-k="description" data-i="${i}"></td>
+          <td><input type="number" step="0.01" value="${attr(row.amount)}" data-t="bill" data-k="amount" data-i="${i}"></td>
+          <td><select data-t="bill" data-k="frequency" data-i="${i}">${frequencyOptions(row.frequency || 'once')}</select></td>
+          <td><button class="btn-danger" data-rm="bill" data-i="${i}">Remove</button></td>
+        `;
+        billsBody.appendChild(tr);
+      });
+    }
+
+    function renderCreditCardsTable() {
+      const body = document.getElementById('cards-body');
+      body.innerHTML = '';
+      state.creditCards.forEach((row, i) => {
+        const exposure = Number(row.balance || 0) + Number(row.monthlyCharges || 0);
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><input type="text" value="${attr(row.name)}" data-t="card" data-k="name" data-i="${i}"></td>
+          <td><input type="number" step="0.01" value="${attr(row.balance)}" data-t="card" data-k="balance" data-i="${i}"></td>
+          <td><input type="number" step="0.01" value="${attr(row.monthlyCharges)}" data-t="card" data-k="monthlyCharges" data-i="${i}"></td>
+          <td><input type="date" value="${attr(row.paymentDate)}" data-t="card" data-k="paymentDate" data-i="${i}"></td>
+          <td><strong>${money(exposure)}</strong></td>
+          <td><button class="btn-danger" data-rm="card" data-i="${i}">Remove</button></td>
+        `;
+        body.appendChild(tr);
+      });
+    }
+
+    function renderAssetsTable() {
+      const body = document.getElementById('assets-body');
+      body.innerHTML = '';
+      state.assets.forEach((row, i) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><input type="text" value="${attr(row.name)}" data-t="asset" data-k="name" data-i="${i}"></td>
+          <td><input type="text" value="${attr(row.type)}" data-t="asset" data-k="type" data-i="${i}"></td>
+          <td><input type="number" step="0.01" value="${attr(row.amount)}" data-t="asset" data-k="amount" data-i="${i}"></td>
+          <td><button class="btn-danger" data-rm="asset" data-i="${i}">Remove</button></td>
+        `;
+        body.appendChild(tr);
+      });
+    }
+
+    function renderPostMoveTable() {
+      const body = document.getElementById('categories-body');
+      body.innerHTML = '';
+      state.postMove.categories.forEach((row, i) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><input type="text" value="${attr(row.name)}" data-t="cat" data-k="name" data-i="${i}"></td>
+          <td><input type="number" step="0.01" value="${attr(row.budget)}" data-t="cat" data-k="budget" data-i="${i}"></td>
+          <td><input type="number" step="0.01" value="${attr(row.actual)}" data-t="cat" data-k="actual" data-i="${i}"></td>
+          <td><button class="btn-danger" data-rm="cat" data-i="${i}">Remove</button></td>
+        `;
+        body.appendChild(tr);
+      });
+    }
+
+    function renderBudgetForecast() {
+      const rows = buildBudgetForecast(6);
+      const first = rows[0] || {
+        bills: 0,
+        budgetedSpend: 0,
+        endCash: assetTotal(),
+        netPosition: assetTotal()
+      };
+      document.getElementById('outlook-bills').textContent = money(first.bills);
+      document.getElementById('outlook-budget').textContent = money(first.budgetedSpend);
+      document.getElementById('outlook-cash').textContent = money(first.endCash);
+      document.getElementById('outlook-net').textContent = money(first.netPosition);
+
+      const body = document.getElementById('budget-forecast-body');
+      body.innerHTML = '';
+      rows.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${row.month}</td>
+          <td>${money(row.startCash)}</td>
+          <td>${money(row.income)}</td>
+          <td>${money(row.bills)}</td>
+          <td>${money(row.cardPayoff)}</td>
+          <td>${money(row.budgetedSpend)}</td>
+          <td>${money(row.endCash)}</td>
+          <td style="font-weight:700; color:${row.netPosition < 0 ? 'var(--danger)' : 'inherit'}">${money(row.netPosition)}</td>
+        `;
+        body.appendChild(tr);
+      });
+    }
+
+    function renderFlow() {
+      const flow = calcCashFlow();
+      const body = document.getElementById('cashflow-body');
+      body.innerHTML = '';
+      flow.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${row.date}</td>
+          <td>${money(row.start)}</td>
+          <td>${money(row.inflows)}</td>
+          <td>${money(row.bills)}</td>
+          <td>${money(row.cardPayoff)}</td>
+          <td style="color:${row.net < 0 ? 'var(--danger)' : 'var(--ok)'}">${money(row.net)}</td>
+          <td style="font-weight:700; color:${row.end < 0 ? 'var(--danger)' : 'inherit'}">${money(row.end)}</td>
+        `;
+        body.appendChild(tr);
+      });
+      return flow;
+    }
+
+    function renderKPIs(flow) {
+      const lowest = setStatus(flow);
+      const ending = flow.length ? flow[flow.length - 1].end : openingBalance();
+      const assets = assetTotal();
+      const cardPayoff = creditCardPayoffTotal();
+      const cardCharges = creditCardChargesTotal();
+      const monthlyBudget = monthlyKnownBillsTotal();
+      const categoryBudget = budgetCategoryTotal();
+      const newCardSpend = categoryBudget + cardCharges;
+      const monthlyActual = sum(state.postMove.categories, x => x.actual) + Number(state.postMove.monthlyRent || 0);
+      const remaining = Number(state.postMove.monthlyIncome || 0) - monthlyBudget - cardPayoff - newCardSpend;
+      const actualRemaining = Number(state.postMove.monthlyIncome || 0) - monthlyBudget - cardPayoff - monthlyActual;
+
+      document.getElementById('kpi-starting').textContent = money(assets);
+      document.getElementById('kpi-ending').textContent = money(ending);
+      document.getElementById('kpi-lowest').textContent = money(lowest.end || 0);
+      document.getElementById('kpi-lowest-date').textContent = lowest.date || '-';
+      document.getElementById('kpi-phase1').textContent = money(cardPayoff);
+      document.getElementById('kpi-monthly').textContent = money(remaining);
+      document.getElementById('kpi-runway').textContent = remaining < 0 && assets > 0
+        ? `${(assets / Math.abs(remaining)).toFixed(1)} months runway`
+        : 'After bills and card payoff';
+
+      const breakdown = document.getElementById('breakdown-list');
+      breakdown.innerHTML = '';
+      [
+        ['Monthly income', money(state.postMove.monthlyIncome)],
+        ['Known recurring bills', money(monthlyBudget)],
+        ['Budgeted card categories', money(categoryBudget)],
+        ['Extra expected card charges', money(cardCharges)],
+        ['Current CC payoff', money(cardPayoff)],
+        ['Card exposure', money(cardPayoff + newCardSpend)]
+      ].forEach(([name, val]) => {
+        const row = document.createElement('div');
+        row.className = 'metric-item';
+        row.innerHTML = `<span>${name}</span><strong>${val}</strong>`;
+        breakdown.appendChild(row);
+      });
+
+      const monthlySummary = document.getElementById('monthly-summary');
+      monthlySummary.innerHTML = '';
+      [
+        ['Known recurring bills', money(monthlyBudget)],
+        ['Budgeted card spend', money(newCardSpend)],
+        ['CC payoff target', money(cardPayoff)],
+        ['Leftover if budget hits', money(remaining)],
+        ['Actual spend', money(monthlyActual)],
+        ['Actual leftover', money(actualRemaining)]
+      ].forEach(([k, v]) => {
+        const row = document.createElement('div');
+        row.className = 'metric-item';
+        row.innerHTML = `<span>${k}</span><strong>${v}</strong>`;
+        monthlySummary.appendChild(row);
+      });
+    }
+
+    function renderWindowInputs() {
+      const startingCash = document.getElementById('starting-cash');
+      document.getElementById('move-start-date').value = state.movePlan.startDate;
+      document.getElementById('move-end-date').value = state.movePlan.endDate;
+      document.getElementById('use-assets-opening').checked = state.settings.useAssetsAsOpening;
+      startingCash.value = state.settings.useAssetsAsOpening ? assetTotal() : state.movePlan.startingCash;
+      startingCash.disabled = state.settings.useAssetsAsOpening;
+      document.getElementById('monthly-income').value = state.postMove.monthlyIncome;
+      document.getElementById('monthly-rent').value = state.postMove.monthlyRent;
+    }
+
+    function render() {
+      renderWindowInputs();
+      renderMoveTables();
+      renderCreditCardsTable();
+      renderAssetsTable();
+      renderPostMoveTable();
+      renderBudgetForecast();
+      const flow = renderFlow();
+      renderKPIs(flow);
+    }
+
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    document.getElementById('save-window').addEventListener('click', () => {
+      state.movePlan.startDate = document.getElementById('move-start-date').value;
+      state.movePlan.endDate = document.getElementById('move-end-date').value;
+      state.settings.useAssetsAsOpening = document.getElementById('use-assets-opening').checked;
+      if (!state.settings.useAssetsAsOpening) {
+        state.movePlan.startingCash = Number(document.getElementById('starting-cash').value || 0);
+      }
+      save();
+    });
+
+    document.getElementById('use-assets-opening').addEventListener('change', (e) => {
+      state.settings.useAssetsAsOpening = e.target.checked;
+      save();
+    });
+
+    document.getElementById('save-monthly').addEventListener('click', () => {
+      state.postMove.monthlyIncome = Number(document.getElementById('monthly-income').value || 0);
+      state.postMove.monthlyRent = Number(document.getElementById('monthly-rent').value || 0);
+      save();
+    });
+
+    document.getElementById('seed-template').addEventListener('click', () => {
+      state = hydrateState();
+      save();
+    });
+
+    document.getElementById('add-inflow').addEventListener('click', () => {
+      state.movePlan.inflows.push({ date: state.movePlan.startDate, description: 'New income', amount: 0, frequency: 'once' });
+      save();
+    });
+
+    document.getElementById('add-bill').addEventListener('click', () => {
+      state.movePlan.bills.push({ date: state.movePlan.startDate, description: 'New recurring outflow', amount: 0, frequency: 'monthly' });
+      save();
+    });
+
+    document.getElementById('apply-current-bills').addEventListener('click', () => {
+      applyCurrentBills();
+    });
+
+    document.getElementById('add-card').addEventListener('click', () => {
+      state.creditCards.push({ name: 'New card', balance: 0, monthlyCharges: 0, paymentDate: currentMonthDay(25) });
+      save();
+    });
+
+    document.getElementById('add-asset').addEventListener('click', () => {
+      state.assets.push({ name: 'New asset', type: 'Cash', amount: 0 });
+      save();
+    });
+
+    document.getElementById('add-category').addEventListener('click', () => {
+      state.postMove.categories.push({ name: 'New category', budget: 0, actual: 0 });
+      save();
+    });
+
+    document.getElementById('apply-budget-template').addEventListener('click', () => {
+      applyBudgetTemplate();
+    });
+
+    document.getElementById('export-data').addEventListener('click', () => {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `budget-command-center-${new Date().toISOString().slice(0, 10)}.json`;
+      link.click();
+      URL.revokeObjectURL(url);
+    });
+
+    document.getElementById('import-data').addEventListener('click', () => {
+      document.getElementById('import-file').click();
+    });
+
+    document.getElementById('import-file').addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          state = hydrateState(JSON.parse(reader.result));
+          save();
+        } catch (error) {
+          alert('That backup file could not be imported.');
+        } finally {
+          e.target.value = '';
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    document.body.addEventListener('change', (e) => {
+      const t = e.target.dataset.t;
+      const k = e.target.dataset.k;
+      const i = Number(e.target.dataset.i);
+      if (!t || !k || Number.isNaN(i)) return;
+      const v = e.target.type === 'number' ? Number(e.target.value || 0) : e.target.value;
+
+      if (t === 'inflow') state.movePlan.inflows[i][k] = v;
+      if (t === 'bill') state.movePlan.bills[i][k] = v;
+      if (t === 'card') state.creditCards[i][k] = v;
+      if (t === 'asset') state.assets[i][k] = v;
+      if (t === 'cat') state.postMove.categories[i][k] = v;
+      save();
+    });
+
+    document.body.addEventListener('click', (e) => {
+      const type = e.target.dataset.rm;
+      const i = Number(e.target.dataset.i);
+      if (!type || Number.isNaN(i)) return;
+
+      if (type === 'inflow') state.movePlan.inflows.splice(i, 1);
+      if (type === 'bill') state.movePlan.bills.splice(i, 1);
+      if (type === 'card') state.creditCards.splice(i, 1);
+      if (type === 'asset') state.assets.splice(i, 1);
+      if (type === 'cat') state.postMove.categories.splice(i, 1);
+      save();
+    });
+
+    render();
+  </script>
+</body>
+</html>
